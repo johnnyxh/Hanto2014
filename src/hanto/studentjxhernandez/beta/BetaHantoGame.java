@@ -47,7 +47,10 @@ public class BetaHantoGame implements HantoGame {
 		HantoPosition dest = newCords(to.getX(), to.getY());
 
 		if (from != null) {
-			throw new HantoException("Illegal Move");
+			throw new HantoException("Illegal Move: can't move pieces");
+		}
+		if (pieceType == HantoPieceType.BUTTERFLY && hasPlacedButterfly(getPlayerTurn())) {
+			throw new HantoException("Illegal Move: only have 1 butterfly");
 		}
 		// First move of the game, second move of the game, then every other
 		if (numTurns == FIRST_TURN_FIRST_P

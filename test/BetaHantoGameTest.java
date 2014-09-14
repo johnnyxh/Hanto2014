@@ -227,7 +227,7 @@ public class BetaHantoGameTest {
 	}
 	
 	@Test
-	public void betaHantoGameButterflyPlacedOn4th() throws HantoException {
+	public void betaHantoGameButterflyPlacedOn4thAndPrintBoard() throws HantoException {
 		HantoGame betaGame = HantoGameFactory.getInstance().makeHantoGame(
 				HantoGameID.BETA_HANTO, HantoPlayerColor.BLUE);
 		HantoCoordinate firstMovePos = new HantoPosition(0, 0);
@@ -257,6 +257,7 @@ public class BetaHantoGameTest {
 		// On this turn the butterfly must be placed else throw exception
 		assertEquals(MoveResult.OK, betaGame.makeMove(HantoPieceType.BUTTERFLY, null, eighthMovePos));
 		assertEquals(HantoPlayerColor.RED, betaGame.getPieceAt(eighthMovePos).getColor());
+		System.out.println(betaGame.getPrintableBoard());
 	}
 	
 	@Test
@@ -357,5 +358,20 @@ public class BetaHantoGameTest {
 		assertEquals(HantoPlayerColor.RED, betaGame.getPieceAt(thirteenthMovePos).getColor());
 	}
 	
+	@Test(expected=HantoException.class)
+	public void betaHantoGamePlacingSecondButterfly() throws HantoException {
+		HantoGame betaGame = HantoGameFactory.getInstance().makeHantoGame(
+				HantoGameID.BETA_HANTO, HantoPlayerColor.BLUE);
+		HantoCoordinate firstMovePos = new HantoPosition(0, 0);
+		HantoCoordinate secondMovePos = new HantoPosition(0, 1);
+		HantoCoordinate thirdMovePos = new HantoPosition(-1, 0);
+		betaGame.makeMove(HantoPieceType.BUTTERFLY, null, firstMovePos);
+		assertEquals(HantoPlayerColor.BLUE, betaGame.getPieceAt(firstMovePos)
+				.getColor());
+		assertEquals(MoveResult.OK, betaGame.makeMove(HantoPieceType.BUTTERFLY, null, secondMovePos));
+		assertEquals(HantoPlayerColor.RED, betaGame.getPieceAt(secondMovePos).getColor());
+		assertEquals(MoveResult.OK, betaGame.makeMove(HantoPieceType.BUTTERFLY, null, thirdMovePos));
+		assertEquals(HantoPlayerColor.BLUE, betaGame.getPieceAt(thirdMovePos).getColor());
+	}
 	
 }
