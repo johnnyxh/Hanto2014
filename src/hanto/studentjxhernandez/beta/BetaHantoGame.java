@@ -20,6 +20,7 @@ public class BetaHantoGame implements HantoGame {
 
 	private static final int FOURTH_TURN_FIRST_P = 6;
 	private static final int FOURTH_TURN_SECOND_P = 7;
+	private static final int SEVENTH_TURN_FIRST_P = 12;
 	private static final int FIRST_TURN_FIRST_P = 0;
 	private static final int HANTO_CENTER_X = 0;
 	private static final int HANTO_CENTER_Y = 0;
@@ -28,8 +29,6 @@ public class BetaHantoGame implements HantoGame {
 	private int numTurns;
 	private HantoPlayerColor movesFirst;
 	private HantoPlayerColor movesSecond;
-	private HantoPosition redButterfly = null;
-	private HantoPosition blueButterfly = null;
 
 	public BetaHantoGame(HantoPlayerColor movesFirst) {
 		numTurns = 0;
@@ -51,13 +50,18 @@ public class BetaHantoGame implements HantoGame {
 			throw new HantoException("Illegal Move");
 		}
 		// First move of the game, second move of the game, then every other
-		if (numTurns == FIRST_TURN_FIRST_P && (to.getX() != HANTO_CENTER_X || to.getY() != HANTO_CENTER_Y)) {
+		if (numTurns == FIRST_TURN_FIRST_P
+				&& (to.getX() != HANTO_CENTER_X || to.getY() != HANTO_CENTER_Y)) {
 			throw new HantoException("Illegal move: not in center");
-		} else if (numTurns > FIRST_TURN_FIRST_P && !isValidMove(dest, getPlayerTurn())) {
+		} else if (numTurns > FIRST_TURN_FIRST_P
+				&& !isValidMove(dest, getPlayerTurn())) {
 			throw new HantoException("Illegal Move: not adjacent to piece");
-		} else if (numTurns == FOURTH_TURN_FIRST_P || numTurns == FOURTH_TURN_SECOND_P) {
-			if (!hasPlacedButterfly(getPlayerTurn()) && pieceType != HantoPieceType.BUTTERFLY) {
-				throw new HantoException("Illegal move: hasn't placed butterfly by 4th turn");
+		} else if (numTurns == FOURTH_TURN_FIRST_P
+				|| numTurns == FOURTH_TURN_SECOND_P) {
+			if (!hasPlacedButterfly(getPlayerTurn())
+					&& pieceType != HantoPieceType.BUTTERFLY) {
+				throw new HantoException(
+						"Illegal move: hasn't placed butterfly by 4th turn");
 			}
 		}
 		board.put(dest, new Piece(pieceType, getPlayerTurn()));
@@ -178,10 +182,19 @@ public class BetaHantoGame implements HantoGame {
 				}
 			}
 		}
+		// Check against all scenarios including first players 7th turn which
+		// means he's out of pieces and loses
 		if (redLoses) {
 			return MoveResult.BLUE_WINS;
 		} else if (blueLoses) {
 			return MoveResult.RED_WINS;
+		} else if (numTurns - 1 == SEVENTH_TURN_FIRST_P) {
+			switch (movesFirst) {
+			case RED:
+				return MoveResult.BLUE_WINS;
+			default:
+				return MoveResult.RED_WINS;
+			}
 		} else {
 			return MoveResult.OK;
 		}

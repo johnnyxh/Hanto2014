@@ -271,6 +271,11 @@ public class BetaHantoGameTest {
 		HantoCoordinate sixthMovePos = new HantoPosition(-5, -0);
 		HantoCoordinate seventhMovePos = new HantoPosition(-6, -0);
 		HantoCoordinate eighthMovePos = new HantoPosition(-7, 0);
+		HantoCoordinate ninthMovePos = new HantoPosition(-8, 0);
+		HantoCoordinate tenthMovePos = new HantoPosition(-9, 0);
+		HantoCoordinate eleventhMovePos = new HantoPosition(-10, 0);
+		HantoCoordinate twelvthMovePos = new HantoPosition(-11, 0);
+		HantoCoordinate thirteenthMovePos = new HantoPosition(-12, 0);
 		betaGame.makeMove(HantoPieceType.SPARROW, null, firstMovePos);
 		assertEquals(HantoPlayerColor.BLUE, betaGame.getPieceAt(firstMovePos)
 				.getColor());
@@ -290,6 +295,66 @@ public class BetaHantoGameTest {
 		// On this turn the butterfly must be placed else throw exception
 		assertEquals(MoveResult.OK, betaGame.makeMove(HantoPieceType.BUTTERFLY, null, eighthMovePos));
 		assertEquals(HantoPlayerColor.RED, betaGame.getPieceAt(eighthMovePos).getColor());
+		assertEquals(MoveResult.OK, betaGame.makeMove(HantoPieceType.SPARROW, null, ninthMovePos));
+		assertEquals(HantoPlayerColor.BLUE, betaGame.getPieceAt(ninthMovePos).getColor());
+		assertEquals(MoveResult.OK, betaGame.makeMove(HantoPieceType.SPARROW, null, tenthMovePos));
+		assertEquals(HantoPlayerColor.RED, betaGame.getPieceAt(tenthMovePos).getColor());
+		assertEquals(MoveResult.OK, betaGame.makeMove(HantoPieceType.SPARROW, null, eleventhMovePos));
+		assertEquals(HantoPlayerColor.BLUE, betaGame.getPieceAt(eleventhMovePos).getColor());
+		assertEquals(MoveResult.OK, betaGame.makeMove(HantoPieceType.SPARROW, null, twelvthMovePos));
+		assertEquals(HantoPlayerColor.RED, betaGame.getPieceAt(twelvthMovePos).getColor());
+		// Out of pieces
+		assertEquals(MoveResult.RED_WINS, betaGame.makeMove(HantoPieceType.SPARROW, null, thirteenthMovePos));
+		assertEquals(HantoPlayerColor.BLUE, betaGame.getPieceAt(thirteenthMovePos).getColor());
+	}
+	
+	@Test
+	public void betaHantoGameRunningOutOfSparrowsRED() throws HantoException {
+		HantoGame betaGame = HantoGameFactory.getInstance().makeHantoGame(
+				HantoGameID.BETA_HANTO, HantoPlayerColor.RED);
+		HantoCoordinate firstMovePos = new HantoPosition(0, 0);
+		HantoCoordinate secondMovePos = new HantoPosition(-1, 0);
+		HantoCoordinate thirdMovePos = new HantoPosition(-2, 0);
+		HantoCoordinate fourthMovePos = new HantoPosition(-3, 0);
+		HantoCoordinate fifthMovePos = new HantoPosition(-4, 0);
+		HantoCoordinate sixthMovePos = new HantoPosition(-5, -0);
+		HantoCoordinate seventhMovePos = new HantoPosition(-6, -0);
+		HantoCoordinate eighthMovePos = new HantoPosition(-7, 0);
+		HantoCoordinate ninthMovePos = new HantoPosition(-8, 0);
+		HantoCoordinate tenthMovePos = new HantoPosition(-9, 0);
+		HantoCoordinate eleventhMovePos = new HantoPosition(-10, 0);
+		HantoCoordinate twelvthMovePos = new HantoPosition(-11, 0);
+		HantoCoordinate thirteenthMovePos = new HantoPosition(-12, 0);
+		betaGame.makeMove(HantoPieceType.SPARROW, null, firstMovePos);
+		assertEquals(HantoPlayerColor.RED, betaGame.getPieceAt(firstMovePos)
+				.getColor());
+		assertEquals(MoveResult.OK, betaGame.makeMove(HantoPieceType.SPARROW, null, secondMovePos));
+		assertEquals(HantoPlayerColor.BLUE, betaGame.getPieceAt(secondMovePos).getColor());
+		assertEquals(MoveResult.OK, betaGame.makeMove(HantoPieceType.SPARROW, null, thirdMovePos));
+		assertEquals(HantoPlayerColor.RED, betaGame.getPieceAt(thirdMovePos).getColor());
+		assertEquals(MoveResult.OK, betaGame.makeMove(HantoPieceType.SPARROW, null, fourthMovePos));
+		assertEquals(HantoPlayerColor.BLUE, betaGame.getPieceAt(fourthMovePos).getColor());
+		assertEquals(MoveResult.OK, betaGame.makeMove(HantoPieceType.SPARROW, null, fifthMovePos));
+		assertEquals(HantoPlayerColor.RED, betaGame.getPieceAt(fifthMovePos).getColor());
+		assertEquals(MoveResult.OK, betaGame.makeMove(HantoPieceType.SPARROW, null, sixthMovePos));
+		assertEquals(HantoPlayerColor.BLUE, betaGame.getPieceAt(sixthMovePos).getColor());
+		// On this turn the butterfly must be placed else throw exception
+		assertEquals(MoveResult.OK, betaGame.makeMove(HantoPieceType.BUTTERFLY, null, seventhMovePos));
+		assertEquals(HantoPlayerColor.RED, betaGame.getPieceAt(seventhMovePos).getColor());
+		// On this turn the butterfly must be placed else throw exception
+		assertEquals(MoveResult.OK, betaGame.makeMove(HantoPieceType.BUTTERFLY, null, eighthMovePos));
+		assertEquals(HantoPlayerColor.BLUE, betaGame.getPieceAt(eighthMovePos).getColor());
+		assertEquals(MoveResult.OK, betaGame.makeMove(HantoPieceType.SPARROW, null, ninthMovePos));
+		assertEquals(HantoPlayerColor.RED, betaGame.getPieceAt(ninthMovePos).getColor());
+		assertEquals(MoveResult.OK, betaGame.makeMove(HantoPieceType.SPARROW, null, tenthMovePos));
+		assertEquals(HantoPlayerColor.BLUE, betaGame.getPieceAt(tenthMovePos).getColor());
+		assertEquals(MoveResult.OK, betaGame.makeMove(HantoPieceType.SPARROW, null, eleventhMovePos));
+		assertEquals(HantoPlayerColor.RED, betaGame.getPieceAt(eleventhMovePos).getColor());
+		assertEquals(MoveResult.OK, betaGame.makeMove(HantoPieceType.SPARROW, null, twelvthMovePos));
+		assertEquals(HantoPlayerColor.BLUE, betaGame.getPieceAt(twelvthMovePos).getColor());
+		// Out of pieces
+		assertEquals(MoveResult.BLUE_WINS, betaGame.makeMove(HantoPieceType.SPARROW, null, thirteenthMovePos));
+		assertEquals(HantoPlayerColor.RED, betaGame.getPieceAt(thirteenthMovePos).getColor());
 	}
 	
 	
