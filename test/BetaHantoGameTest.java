@@ -94,8 +94,8 @@ public class BetaHantoGameTest {
 		assertEquals(HantoPlayerColor.BLUE, betaGame.getPieceAt(thirdMovePos).getColor());
 	}
 	
-	@Test(expected=HantoException.class)
-	public void betaHantoGameThirdMoveBad() throws HantoException {
+	@Test
+	public void betaHantoGameThirdMoveStillGood() throws HantoException {
 		HantoGame betaGame = HantoGameFactory.getInstance().makeHantoGame(
 				HantoGameID.BETA_HANTO, HantoPlayerColor.BLUE);
 		HantoCoordinate firstMovePos = new HantoPosition(0, 0);

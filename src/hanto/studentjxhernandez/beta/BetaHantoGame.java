@@ -87,6 +87,10 @@ public class BetaHantoGame implements HantoGame {
 		}
 	}
 
+	// I somewhat jumped the gun when making this method. It implemented the hanto
+	// Placement rules (cant be next to enemy pieces, must be next to one friendly
+	// piece.) That's why this method is a lot more complex than one for loop.
+	// I changed the tests to reflect this.
 	private boolean isValidMove(HantoPosition to, HantoPlayerColor movingColor) {
 		boolean isValid = false;
 		List<HantoPosition> friendlyPieces = new ArrayList<HantoPosition>();
@@ -101,9 +105,11 @@ public class BetaHantoGame implements HantoGame {
 		}
 		// Check if the selected movement is next to or ontop of an enemy piece
 		for (int i = 0; i < enemyPieces.size(); i++) {
-			if (to.equals(enemyPieces.get(i))
-					|| to.isNextTo(enemyPieces.get(i))) {
+			if (to.equals(enemyPieces.get(i))) {
 				return false;
+			}
+			if (to.isNextTo(enemyPieces.get(i))) {
+				isValid = true;
 			}
 		}
 		// Check if the selected movement is next to or ontop of a friendly piece
