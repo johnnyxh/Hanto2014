@@ -27,12 +27,17 @@ import hanto.studentjxhernandez.common.Piece;
 public class AlphaHantoGame implements HantoGame {
 
 	// I think I moved too fast here
-	private Map<HantoCoordinate, HantoPiece> board = new HashMap<HantoCoordinate, HantoPiece>();
+	private Map<HantoPosition, HantoPiece> board = new HashMap<HantoPosition, HantoPiece>();
 	private boolean blueTurn = true;
 
 	@Override
 	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from,
 			HantoCoordinate to) throws HantoException {
+		
+		HantoPosition dest = newCords(to.getX(), to.getY());
+		if (from != null) {
+			throw new HantoException("Illegal Move");
+		}
 		// Butterfly only and there is no chance to move an existing piece
 		if (pieceType != HantoPieceType.BUTTERFLY || from != null) {
 			throw new HantoException("Illegal Move");
@@ -45,12 +50,13 @@ public class AlphaHantoGame implements HantoGame {
 		if (!blueTurn) {
 			int distX = Math.abs(to.getX());
 			int distY = Math.abs(to.getY());
-			if ((distX == 0 && distY == 0) || distX > 1 || distY > 1) {
+			HantoPosition edgePosition1 = new HantoPosition(1, 1);
+			HantoPosition edgePosition2 = new HantoPosition(-1, -1);
+			boolean edgeCase = dest.equals(edgePosition1) || dest.equals(edgePosition2);
+			if ((distX == 0 && distY == 0) || distX > 1 || distY > 1 || edgeCase) {
 				throw new HantoException("Illegal Move");
 			}
 		}
-		// Fix for pollice tests
-		HantoCoordinate dest = newCords(to.getX(), to.getY());
 		// Blue only gets one turn make it false
 		if (blueTurn) {
 			board.put(dest, new Piece(pieceType, HantoPlayerColor.BLUE));
@@ -71,7 +77,7 @@ public class AlphaHantoGame implements HantoGame {
 	@Override
 	public String getPrintableBoard() {
 		StringBuilder printBoard = new StringBuilder();
-		for (Map.Entry<HantoCoordinate, HantoPiece> entry : board.entrySet()) {
+		for (Entry<HantoPosition, HantoPiece> entry : board.entrySet()) {
 			printBoard
 					.append(entry.getValue() + " AT " + entry.getKey() + "\n");
 		}
