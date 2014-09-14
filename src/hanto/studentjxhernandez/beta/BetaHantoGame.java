@@ -18,10 +18,18 @@ import hanto.studentjxhernandez.common.Piece;
 
 public class BetaHantoGame implements HantoGame {
 
+	private static final int FOURTH_TURN_FIRST_P = 6;
+	private static final int FOURTH_TURN_SECOND_P = 7;
+	private static final int FIRST_TURN_FIRST_P = 0;
+	private static final int HANTO_CENTER_X = 0;
+	private static final int HANTO_CENTER_Y = 0;
+
 	private Map<HantoPosition, HantoPiece> board = new HashMap<HantoPosition, HantoPiece>();
 	private int numTurns;
 	private HantoPlayerColor movesFirst;
 	private HantoPlayerColor movesSecond;
+	private HantoPosition redButterfly = null;
+	private HantoPosition blueButterfly = null;
 
 	public BetaHantoGame(HantoPlayerColor movesFirst) {
 		numTurns = 0;
@@ -36,27 +44,25 @@ public class BetaHantoGame implements HantoGame {
 	@Override
 	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from,
 			HantoCoordinate to) throws HantoException {
-		
+
 		HantoPosition dest = newCords(to.getX(), to.getY());
-		
+
 		if (from != null) {
 			throw new HantoException("Illegal Move");
 		}
 		// First move of the game, second move of the game, then every other
-		if (numTurns == 0 && (to.getX() != 0 || to.getY() != 0)) {
-			throw new HantoException("Illegal Move");
-		} else if (numTurns == 1) {
-			int distX = Math.abs(to.getX());
-			int distY = Math.abs(to.getY());
-			if ((distX == 0 && distY == 0) || distX > 1 || distY > 1) {
-				throw new HantoException("Illegal Move");
+		if (numTurns == FIRST_TURN_FIRST_P && (to.getX() != HANTO_CENTER_X || to.getY() != HANTO_CENTER_Y)) {
+			throw new HantoException("Illegal move: not in center");
+		} else if (numTurns > FIRST_TURN_FIRST_P && !isValidMove(dest, getPlayerTurn())) {
+			throw new HantoException("Illegal Move: not adjacent to piece");
+		} else if (numTurns == FOURTH_TURN_FIRST_P || numTurns == FOURTH_TURN_SECOND_P) {
+			if (!hasPlacedButterfly(getPlayerTurn()) && pieceType != HantoPieceType.BUTTERFLY) {
+				throw new HantoException("Illegal move: hasn't placed butterfly by 4th turn");
 			}
-		} else if (numTurns >= 2 && !isValidMove(dest, getPlayerTurn())) {
-			throw new HantoException("Illegal Move");
 		}
 		board.put(dest, new Piece(pieceType, getPlayerTurn()));
 		numTurns++;
-		return MoveResult.OK;
+		return moveResult();
 	}
 
 	@Override
@@ -87,8 +93,10 @@ public class BetaHantoGame implements HantoGame {
 		}
 	}
 
-	// I somewhat jumped the gun when making this method. It implemented the hanto
-	// Placement rules (cant be next to enemy pieces, must be next to one friendly
+	// I somewhat jumped the gun when making this method. It implemented the
+	// hanto
+	// Placement rules (cant be next to enemy pieces, must be next to one
+	// friendly
 	// piece.) That's why this method is a lot more complex than one for loop.
 	// I changed the tests to reflect this.
 	private boolean isValidMove(HantoPosition to, HantoPlayerColor movingColor) {
@@ -112,9 +120,10 @@ public class BetaHantoGame implements HantoGame {
 				isValid = true;
 			}
 		}
-		// Check if the selected movement is next to or ontop of a friendly piece
+		// Check if the selected movement is next to or ontop of a friendly
+		// piece
 		// Needs to be next to atleast one (and not on top of another friendly)
-		for (int i=0; i < friendlyPieces.size(); i++) {
+		for (int i = 0; i < friendlyPieces.size(); i++) {
 			if (to.equals(friendlyPieces.get(i))) {
 				return false;
 			}
@@ -123,6 +132,69 @@ public class BetaHantoGame implements HantoGame {
 			}
 		}
 		return isValid;
+	}
+
+	private MoveResult moveResult() {
+		boolean redLoses = false;
+		boolean blueLoses = false;
+		HantoPosition redButterfly = null;
+		HantoPosition blueButterfly = null;
+		for (Entry<HantoPosition, HantoPiece> entry : board.entrySet()) {
+			// Has a butterfly been found?
+			if (entry.getValue().getType() == HantoPieceType.BUTTERFLY) {
+				// Store the respective butterflies into special variables for
+				// later and set lose to true as there is now the possibility of
+				// a loss
+				if (entry.getValue().getColor() == HantoPlayerColor.BLUE) {
+					blueButterfly = entry.getKey();
+					blueLoses = true;
+				} else {
+					redButterfly = entry.getKey();
+					redLoses = true;
+				}
+			}
+		}
+		// If butterfly hasn't been placed red can't really lose right now
+		if (redButterfly != null) {
+			List<HantoPosition> surroundingRed = redButterfly
+					.surroundingHexes();
+			for (int i = 0; i < surroundingRed.size(); i++) {
+				// If atleast one hex surrounding it is empty red hasn't lost
+				if (board.get(surroundingRed.get(i)) == null) {
+					redLoses = false;
+					break;
+				}
+			}
+		}
+		// If butterfly hasn't been placed blue can't really lose right now
+		if (blueButterfly != null) {
+			List<HantoPosition> surroundingBlue = blueButterfly
+					.surroundingHexes();
+			for (int i = 0; i < surroundingBlue.size(); i++) {
+				// If atleast one hex surrounding it is empty blue hasn't lost
+				if (board.get(surroundingBlue.get(i)) == null) {
+					blueLoses = false;
+					break;
+				}
+			}
+		}
+		if (redLoses) {
+			return MoveResult.BLUE_WINS;
+		} else if (blueLoses) {
+			return MoveResult.RED_WINS;
+		} else {
+			return MoveResult.OK;
+		}
+	}
+
+	private boolean hasPlacedButterfly(HantoPlayerColor movingColor) {
+		for (Entry<HantoPosition, HantoPiece> entry : board.entrySet()) {
+			if (entry.getValue().getType() == HantoPieceType.BUTTERFLY
+					&& entry.getValue().getColor() == movingColor) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

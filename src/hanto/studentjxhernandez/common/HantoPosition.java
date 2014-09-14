@@ -10,6 +10,9 @@
 
 package hanto.studentjxhernandez.common;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
 
@@ -80,9 +83,9 @@ public class HantoPosition implements HantoCoordinate {
 	}
 	
 	/**
-	 * Method that tests whether a given coordinate is next to this coordinate
+	 * Method that tests whether a given position is next to this position
 	 * @param otherPos Other position to compare
-	 * @return True if the coordinate is beside this one, false otherwise.
+	 * @return True if the position is beside this one, false otherwise.
 	 */
 	public boolean isNextTo(HantoCoordinate otherPos) {
 		int distX = Math.abs(otherPos.getX() - getX());
@@ -95,6 +98,34 @@ public class HantoPosition implements HantoCoordinate {
 		HantoPosition difference = new HantoPosition(otherPos.getX() - getX(), otherPos.getY() - getY());
 		boolean edgeCase = difference.equals(edgePosition1) || difference.equals(edgePosition2);
 		return (!((distX == 0 && distY == 0) || distX > 1 || distY > 1 || edgeCase));
+	}
+	
+	/**
+	 * Gets the HantoPositions of all hexes surrounding this position
+	 * @return A List containing all six surrounding hexes
+	 */
+	public List<HantoPosition> surroundingHexes() {
+		List<HantoPosition> hexes = new ArrayList<HantoPosition> ();
+		// Top hex
+		HantoPosition one = new HantoPosition(getX(), getY()+1);
+		hexes.add(one);
+		// Top left hex
+		HantoPosition two = new HantoPosition(getX()-1, getY()+1);
+		hexes.add(two);
+		// Bottom left hex
+		HantoPosition three = new HantoPosition(getX()-1, getY());
+		hexes.add(three);
+		// Bottom hex
+		HantoPosition four = new HantoPosition(getX(), getY()-1);
+		hexes.add(four);
+		// Bottom right hex
+		HantoPosition five = new HantoPosition(getX()+1, getY()-1);
+		hexes.add(five);
+		// Top right hex
+		HantoPosition six = new HantoPosition(getX()+1, getY());
+		hexes.add(six);
+		
+		return hexes;
 	}
 
 }
