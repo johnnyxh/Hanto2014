@@ -8,15 +8,23 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 
-package hanto.studentjxhernandez.alpha;
+package hanto.jxhernandez.alpha;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import hanto.common.*;
-import hanto.studentjxhernandez.common.HantoPosition;
-import hanto.studentjxhernandez.common.Piece;
+import common.*;
+
+import hanto.common.HantoCoordinate;
+import hanto.common.HantoException;
+import hanto.common.HantoGame;
+import hanto.common.HantoPiece;
+import hanto.common.HantoPieceType;
+import hanto.common.HantoPlayerColor;
+import hanto.common.MoveResult;
+import hanto.jxhernandez.common.HantoPosition;
+import hanto.jxhernandez.common.Piece;
 
 /**
  * Hanto game where each side only gets one butterfly and blue always goes

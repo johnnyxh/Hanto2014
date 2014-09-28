@@ -8,69 +8,62 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 
-package hanto;
+package common;
 
 import hanto.common.*;
-import hanto.studentjxhernandez.alpha.AlphaHantoGame;
-import hanto.studentjxhernandez.beta.BetaHantoGame;
+import hanto.jxhernandez.HantoGameFactory;
+import hanto.jxhernandez.alpha.AlphaHantoGame;
+import hanto.jxhernandez.beta.BetaHantoGame;
+import hanto.jxhernandez.gamma.GammaHantoTestGame;
 
 /**
- * This is a singleton class that provides a factory to create an instance of
- * any version of a Hanto game.
- * 
- * @author gpollice
- * @version Feb 5, 2013
+ * Description
+ * @version Sep 22, 2014
  */
-public class HantoGameFactory {
-	private static final HantoGameFactory instance = new HantoGameFactory();
-
+public class HantoTestGameFactory
+{
+	private static final HantoTestGameFactory instance = new HantoTestGameFactory();
+	
 	/**
 	 * Default private descriptor.
 	 */
-	private HantoGameFactory() {
+	private HantoTestGameFactory()
+	{
 		// Empty, but the private constructor is necessary for the singleton.
 	}
 
 	/**
 	 * @return the instance
 	 */
-	public static HantoGameFactory getInstance() {
+	public static HantoTestGameFactory getInstance()
+	{
 		return instance;
 	}
-
+	
 	/**
 	 * Create the specified Hanto game version with the Blue player moving
 	 * first.
-	 * 
-	 * @param gameId
-	 *            the version desired.
+	 * @param gameId the version desired.
 	 * @return the game instance
 	 */
-	public HantoGame makeHantoGame(HantoGameID gameId) {
-		return makeHantoGame(gameId, HantoPlayerColor.BLUE);
+	public HantoGame makeTestHantoGame(HantoGameID gameId)
+	{
+		return makeHantoTestGame(gameId, HantoPlayerColor.BLUE);
 	}
-
+	
 	/**
 	 * Factory method that returns the appropriately configured Hanto game.
-	 * 
-	 * @param gameId
-	 *            the version desired.
-	 * @param movesFirst
-	 *            the player color that moves first
+	 * @param gameId the version desired.
+	 * @param movesFirst the player color that moves first
 	 * @return the game instance
 	 */
-	public HantoGame makeHantoGame(HantoGameID gameId,
-			HantoPlayerColor movesFirst) {
+	public  HantoGame makeHantoTestGame(HantoGameID gameId, HantoPlayerColor movesFirst) {
 		HantoGame game = null;
 		switch (gameId) {
-		case ALPHA_HANTO:
-			game = new AlphaHantoGame();
-			break;
-		case BETA_HANTO:
-			game = new BetaHantoGame(movesFirst);
-			break;
+			case GAMMA_HANTO:
+				game = new GammaHantoTestGame(movesFirst);
+				break;
 		}
-		// Put in code for beta hanto later
 		return game;
 	}
 }

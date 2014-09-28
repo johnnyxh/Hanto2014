@@ -8,7 +8,7 @@
 
 package alphaBetaTests;
 import static org.junit.Assert.*;
-import hanto.studentjxhernandez.common.HantoPosition;
+import hanto.jxhernandez.common.HantoPosition;
 
 import org.junit.Test;
 

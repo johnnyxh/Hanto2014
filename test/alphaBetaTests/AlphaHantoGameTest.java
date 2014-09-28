@@ -8,7 +8,6 @@
 
 package alphaBetaTests;
 import static org.junit.Assert.*;
-import hanto.HantoGameFactory;
 import hanto.common.HantoCoordinate;
 import hanto.common.HantoException;
 import hanto.common.HantoGame;
@@ -17,8 +16,9 @@ import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
-import hanto.studentjxhernandez.common.HantoPosition;
-import hanto.studentjxhernandez.common.Piece;
+import hanto.jxhernandez.HantoGameFactory;
+import hanto.jxhernandez.common.HantoPosition;
+import hanto.jxhernandez.common.Piece;
 
 import org.junit.Test;
 /**

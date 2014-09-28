@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
-import hanto.studentjxhernandez.common.Piece;
+import hanto.jxhernandez.common.Piece;
 
 import org.junit.Test;
 

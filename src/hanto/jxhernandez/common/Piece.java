@@ -8,7 +8,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 
-package hanto.studentjxhernandez.common;
+package hanto.jxhernandez.common;
 
 import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;

@@ -8,7 +8,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 
-package hanto.studentjxhernandez.beta;
+package hanto.jxhernandez.beta;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +19,8 @@ import hanto.common.HantoException;
 import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
-import hanto.studentjxhernandez.common.HantoBaseGame;
-import hanto.studentjxhernandez.common.HantoPosition;
+import hanto.jxhernandez.common.HantoBaseGame;
+import hanto.jxhernandez.common.HantoPosition;
 
 /**
  * Hanto game where each side only gets one butterfly and five sparrows. Pieces

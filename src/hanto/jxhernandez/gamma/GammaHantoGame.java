@@ -1,8 +1,8 @@
-package hanto.studentjxhernandez.gamma;
+package hanto.jxhernandez.gamma;
 
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
-import hanto.studentjxhernandez.common.HantoBaseGame;
+import hanto.jxhernandez.common.HantoBaseGame;
 
 public class GammaHantoGame extends HantoBaseGame {
 	
