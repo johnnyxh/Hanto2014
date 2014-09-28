@@ -1,3 +1,12 @@
+/*******************************************************************************
+ * This files was developed for CS4233: Object-Oriented Analysis & Design. The course was
+ * taken at Worcester Polytechnic Institute. All rights reserved. This program and the
+ * accompanying materials are made available under the terms of the Eclipse Public License
+ * v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+
+package alphaBetaTests;
 import static org.junit.Assert.*;
 import hanto.HantoGameFactory;
 import hanto.common.HantoCoordinate;
@@ -305,8 +314,7 @@ public class BetaHantoGameTest {
 		assertEquals(MoveResult.OK, betaGame.makeMove(HantoPieceType.SPARROW, null, twelvthMovePos));
 		assertEquals(HantoPlayerColor.RED, betaGame.getPieceAt(twelvthMovePos).getColor());
 		// Out of pieces
-		assertEquals(MoveResult.RED_WINS, betaGame.makeMove(HantoPieceType.SPARROW, null, thirteenthMovePos));
-		assertEquals(HantoPlayerColor.BLUE, betaGame.getPieceAt(thirteenthMovePos).getColor());
+		assertEquals(MoveResult.DRAW, betaGame.makeMove(HantoPieceType.SPARROW, null, thirteenthMovePos));
 	}
 	
 	@Test
@@ -354,8 +362,7 @@ public class BetaHantoGameTest {
 		assertEquals(MoveResult.OK, betaGame.makeMove(HantoPieceType.SPARROW, null, twelvthMovePos));
 		assertEquals(HantoPlayerColor.BLUE, betaGame.getPieceAt(twelvthMovePos).getColor());
 		// Out of pieces
-		assertEquals(MoveResult.BLUE_WINS, betaGame.makeMove(HantoPieceType.SPARROW, null, thirteenthMovePos));
-		assertEquals(HantoPlayerColor.RED, betaGame.getPieceAt(thirteenthMovePos).getColor());
+		assertEquals(MoveResult.DRAW, betaGame.makeMove(HantoPieceType.SPARROW, null, thirteenthMovePos));
 	}
 	
 	@Test(expected=HantoException.class)

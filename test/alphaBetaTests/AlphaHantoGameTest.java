@@ -1,3 +1,12 @@
+/*******************************************************************************
+ * This files was developed for CS4233: Object-Oriented Analysis & Design. The course was
+ * taken at Worcester Polytechnic Institute. All rights reserved. This program and the
+ * accompanying materials are made available under the terms of the Eclipse Public License
+ * v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+
+package alphaBetaTests;
 import static org.junit.Assert.*;
 import hanto.HantoGameFactory;
 import hanto.common.HantoCoordinate;
@@ -12,9 +21,17 @@ import hanto.studentjxhernandez.common.HantoPosition;
 import hanto.studentjxhernandez.common.Piece;
 
 import org.junit.Test;
-
+/**
+ * Alpha Hanto tests
+ * @author johnny
+ *
+ */
 public class AlphaHantoGameTest {
 
+	/**
+	 * First move test
+	 * @throws HantoException
+	 */
 	@Test
 	public void alphaHantoGameGoodFirstMove() throws HantoException {
 		HantoGame alphaGame = HantoGameFactory.getInstance().makeHantoGame(
@@ -23,7 +40,11 @@ public class AlphaHantoGameTest {
 		assertEquals(MoveResult.OK, alphaGame.makeMove(
 				HantoPieceType.BUTTERFLY, null, firstMovePos));
 	}
-
+	
+	/**
+	 * Bad first move test
+	 * @throws HantoException
+	 */
 	@Test(expected = HantoException.class)
 	public void alphaHantoGameBadFirstMove() throws HantoException {
 		HantoGame alphaGame = HantoGameFactory.getInstance().makeHantoGame(
@@ -33,6 +54,10 @@ public class AlphaHantoGameTest {
 				HantoPieceType.BUTTERFLY, null, firstMovePos));
 	}
 
+	/**
+	 * Get piece test
+	 * @throws HantoException
+	 */
 	@Test
 	public void alphaHantoGetPieceAfterFirstMove() throws HantoException {
 		HantoGame alphaGame = HantoGameFactory.getInstance().makeHantoGame(
@@ -44,6 +69,10 @@ public class AlphaHantoGameTest {
 		assertEquals(firstPiece, alphaGame.getPieceAt(firstMovePos));
 	}
 
+	/**
+	 * Not butterfly test
+	 * @throws HantoException
+	 */
 	@Test(expected = HantoException.class)
 	public void alphaHantoGameNotButterfly() throws HantoException {
 		HantoGame alphaGame = HantoGameFactory.getInstance().makeHantoGame(
@@ -52,6 +81,10 @@ public class AlphaHantoGameTest {
 		alphaGame.makeMove(HantoPieceType.SPARROW, null, firstMovePos);
 	}
 
+	/**
+	 * Good second move test
+	 * @throws HantoException
+	 */
 	@Test
 	public void alphaHantoGameGoodSecondMove() throws HantoException {
 		HantoGame alphaGame = HantoGameFactory.getInstance().makeHantoGame(
@@ -63,6 +96,10 @@ public class AlphaHantoGameTest {
 				HantoPieceType.BUTTERFLY, null, secondMovePos));
 	}
 
+	/**
+	 * Bad second move test
+	 * @throws HantoException
+	 */
 	@Test(expected = HantoException.class)
 	public void alphaHantoGameBadSecondMove() throws HantoException {
 		HantoGame alphaGame = HantoGameFactory.getInstance().makeHantoGame(
@@ -73,6 +110,10 @@ public class AlphaHantoGameTest {
 		alphaGame.makeMove(HantoPieceType.BUTTERFLY, null, secondMovePos);
 	}
 
+	/**
+	 * Can't move existing piece
+	 * @throws HantoException
+	 */
 	@Test(expected = HantoException.class)
 	public void alphaHantoGameMoveExisting() throws HantoException {
 		HantoGame alphaGame = HantoGameFactory.getInstance().makeHantoGame(
@@ -82,6 +123,10 @@ public class AlphaHantoGameTest {
 		alphaGame.makeMove(HantoPieceType.BUTTERFLY, originalPos, firstMovePos);
 	}
 
+	/**
+	 * Printable board test
+	 * @throws HantoException
+	 */
 	@Test
 	public void alphaHantoGamePrintableBoard() throws HantoException {
 		HantoGame alphaGame = HantoGameFactory.getInstance().makeHantoGame(

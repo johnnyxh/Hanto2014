@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hanto.common.HantoCoordinate;
-import hanto.common.HantoException;
 
 /**
  * Class that will store x and y coordinates for a hexagonal hanto board
@@ -92,7 +91,7 @@ public class HantoPosition implements HantoCoordinate {
 		int distY = Math.abs(otherPos.getY() - getY());
 		// The distance will work except for two hexagonal positions
 		// Which are false positives, when subtracted they must not 
-		// Equal to (1,1) or (-1,-1) 
+		// Be these bottom two coordinates 
 		HantoPosition edgePosition1 = new HantoPosition(1, 1);
 		HantoPosition edgePosition2 = new HantoPosition(-1, -1);
 		HantoPosition difference = new HantoPosition(otherPos.getX() - getX(), otherPos.getY() - getY());
@@ -126,6 +125,18 @@ public class HantoPosition implements HantoCoordinate {
 		hexes.add(six);
 		
 		return hexes;
+	}
+	
+	/**
+	 * Converts a HantoCoordinate into a HantoPosition
+	 * @param coord HantoCoordinate to convert
+	 * @return A new HantoPosition object
+	 */
+	public static HantoPosition coordinateToPosition(HantoCoordinate coord) {
+		if (coord == null) {
+			return null;
+		}
+		return new HantoPosition(coord.getX(),coord.getY());
 	}
 
 }

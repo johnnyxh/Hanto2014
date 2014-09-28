@@ -1,3 +1,12 @@
+/*******************************************************************************
+ * This files was developed for CS4233: Object-Oriented Analysis & Design. The course was
+ * taken at Worcester Polytechnic Institute. All rights reserved. This program and the
+ * accompanying materials are made available under the terms of the Eclipse Public License
+ * v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+
+package alphaBetaTests;
 import static org.junit.Assert.*;
 import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
@@ -6,9 +15,16 @@ import hanto.studentjxhernandez.common.Piece;
 
 import org.junit.Test;
 
-
+/**
+ * Tests for the piece class
+ * @author johnny
+ *
+ */
 public class PieceTests {
 
+	/**
+	 * Equals tests
+	 */
 	@Test
 	public void HantoPieceEqualsTests() {
 		HantoPiece piece1 = new Piece(HantoPieceType.BUTTERFLY, HantoPlayerColor.BLUE);
@@ -25,6 +41,9 @@ public class PieceTests {
 		assertFalse(piece1.equals(diffObject));
 	}
 	
+	/**
+	 * Hash tests
+	 */
 	@Test
 	public void HantoPieceHashTests() {
 		HantoPiece piece1 = new Piece(HantoPieceType.BUTTERFLY, HantoPlayerColor.BLUE);
@@ -36,6 +55,9 @@ public class PieceTests {
 		assertFalse(piece1.hashCode() == diffPiece.hashCode());
 	}
 	
+	/**
+	 * Getters tests
+	 */
 	@Test
 	public void HantoPieceGetters() {
 		HantoPiece piece1 = new Piece(HantoPieceType.BUTTERFLY, HantoPlayerColor.BLUE);
