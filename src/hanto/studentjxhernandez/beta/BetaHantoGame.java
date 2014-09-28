@@ -32,7 +32,6 @@ public class BetaHantoGame extends HantoBaseGame {
 
 	private static final int FOURTH_TURN_FIRST_P = 6;
 	private static final int FOURTH_TURN_SECOND_P = 7;
-	private static final int SEVENTH_TURN_FIRST_P = 12;
 
 	/**
 	 * Constructor for BetaHantoGame.
@@ -92,9 +91,6 @@ public class BetaHantoGame extends HantoBaseGame {
 	
 	@Override
 	protected void preRuleSetCheck(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to) throws HantoException {
-		if (numTurns > SEVENTH_TURN_FIRST_P) {
-			throw new HantoException("Illegal Move: Game is over");
-		}
 		if (from != null) {
 			throw new HantoException("Illegal Move: can't move pieces");
 		}

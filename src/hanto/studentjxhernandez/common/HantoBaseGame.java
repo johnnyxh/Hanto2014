@@ -244,10 +244,10 @@ public abstract class HantoBaseGame implements HantoGame {
 		// Method for specific games to implement
 	}
 
-	protected MoveResult postRuleSetCheck(HantoPieceType pieceType,
+	protected void postRuleSetCheck(HantoPieceType pieceType,
 			HantoCoordinate from, HantoCoordinate to)
 			throws HantoException {
-		return null;
+		// Method for specific games to implement
 	}
 
 }

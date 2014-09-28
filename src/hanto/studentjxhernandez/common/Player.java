@@ -73,9 +73,5 @@ public class Player {
 	public HantoPlayerColor getPlayerColor() {
 		return color;
 	}
-	
-	public boolean contains(HantoPieceType piece) {
-		return reserves.contains(piece);
-	}
 
 }
