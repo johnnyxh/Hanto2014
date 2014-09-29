@@ -21,6 +21,7 @@ import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.jxhernandez.common.HantoBaseGame;
 import hanto.jxhernandez.common.HantoPosition;
+import hanto.jxhernandez.common.Piece;
 
 /**
  * Hanto game where each side only gets one butterfly and five sparrows. Pieces
@@ -59,7 +60,7 @@ public class BetaHantoGame extends HantoBaseGame {
 		List<HantoPosition> friendlyPieces = new ArrayList<HantoPosition>();
 		List<HantoPosition> enemyPieces = new ArrayList<HantoPosition>();
 		// Gather a list of friendly and enemy occupied positions on the board
-		for (Entry<HantoPosition, HantoPiece> entry : board.entrySet()) {
+		for (Entry<HantoPosition, Piece> entry : board.entrySet()) {
 			if (entry.getValue().getColor() == movingColor) {
 				friendlyPieces.add(entry.getKey());
 			} else {

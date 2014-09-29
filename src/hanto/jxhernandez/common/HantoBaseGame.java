@@ -30,7 +30,7 @@ public abstract class HantoBaseGame implements HantoGame {
 	protected static final int HANTO_CENTER_Y = 0;
 	protected static final int FIRST_TURN = 0;
 
-	protected Map<HantoPosition, HantoPiece> board = new HashMap<HantoPosition, HantoPiece>();
+	protected Map<HantoPosition, Piece> board = new HashMap<HantoPosition, Piece>();
 	protected int numTurns;
 	protected Player firstPlayer;
 	protected Player secondPlayer;
@@ -78,7 +78,7 @@ public abstract class HantoBaseGame implements HantoGame {
 	@Override
 	public String getPrintableBoard() {
 		StringBuilder printBoard = new StringBuilder();
-		for (Entry<HantoPosition, HantoPiece> entry : board.entrySet()) {
+		for (Entry<HantoPosition, Piece> entry : board.entrySet()) {
 			printBoard
 					.append(entry.getValue() + " AT " + entry.getKey() + "\n");
 		}
@@ -90,7 +90,7 @@ public abstract class HantoBaseGame implements HantoGame {
 	 * 
 	 * @return A HantoPlayerColor of the current player's turn
 	 */
-	protected Player getPlayerTurn() {
+	public Player getPlayerTurn() {
 		if (numTurns % 2 == 0) {
 			return firstPlayer;
 		} else {
@@ -120,7 +120,7 @@ public abstract class HantoBaseGame implements HantoGame {
 		List<HantoPosition> friendlyPieces = new ArrayList<HantoPosition>();
 		List<HantoPosition> enemyPieces = new ArrayList<HantoPosition>();
 		// Gather a list of friendly and enemy occupied positions on the board
-		for (Entry<HantoPosition, HantoPiece> entry : board.entrySet()) {
+		for (Entry<HantoPosition, Piece> entry : board.entrySet()) {
 			if (entry.getValue().getColor() == movingColor) {
 				friendlyPieces.add(entry.getKey());
 			} else {
@@ -153,7 +153,7 @@ public abstract class HantoBaseGame implements HantoGame {
 		boolean blueLoses = false;
 		HantoPosition redButterfly = null;
 		HantoPosition blueButterfly = null;
-		for (Entry<HantoPosition, HantoPiece> entry : board.entrySet()) {
+		for (Entry<HantoPosition, Piece> entry : board.entrySet()) {
 			// Has a butterfly been found?
 			if (entry.getValue().getType() == HantoPieceType.BUTTERFLY) {
 				// Store the respective butterflies into special variables for
@@ -230,7 +230,7 @@ public abstract class HantoBaseGame implements HantoGame {
 	}
 
 	protected boolean hasPlacedButterfly(HantoPlayerColor movingColor) {
-		for (Entry<HantoPosition, HantoPiece> entry : board.entrySet()) {
+		for (Entry<HantoPosition, Piece> entry : board.entrySet()) {
 			if (entry.getValue().getType() == HantoPieceType.BUTTERFLY
 					&& entry.getValue().getColor() == movingColor) {
 				return true;
@@ -248,6 +248,38 @@ public abstract class HantoBaseGame implements HantoGame {
 			HantoCoordinate from, HantoCoordinate to)
 			throws HantoException {
 		// Method for specific games to implement
+	}
+
+	public int getNumTurns() {
+		return numTurns;
+	}
+
+	public void setNumTurns(int numTurns) {
+		this.numTurns = numTurns;
+	}
+
+	public Player getFirstPlayer() {
+		return firstPlayer;
+	}
+
+	public void setFirstPlayer(Player firstPlayer) {
+		this.firstPlayer = firstPlayer;
+	}
+
+	public Player getSecondPlayer() {
+		return secondPlayer;
+	}
+
+	public void setSecondPlayer(Player secondPlayer) {
+		this.secondPlayer = secondPlayer;
+	}
+
+	public Map<HantoPosition, Piece> getBoard() {
+		return board;
+	}
+	
+	public void setBoard(Map<HantoPosition, Piece> board) {
+		this.board = board;
 	}
 
 }
