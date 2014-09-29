@@ -51,7 +51,17 @@ public abstract class HantoBaseGame implements HantoGame {
 
 		HantoPosition orig = HantoPosition.coordinateToPosition(from);
 		HantoPosition dest = HantoPosition.coordinateToPosition(to);
+		Map<HantoPosition, Piece> preMoveBoard = new HashMap<HantoPosition, Piece>(board);
 		MoveResult specificRuleResult;
+
+		// Resignation check
+		if (pieceType == null && from == null && to == null) {
+			if (getPlayerTurn().getPlayerColor() == HantoPlayerColor.RED) {
+				return MoveResult.BLUE_WINS;
+			} else {
+				return MoveResult.RED_WINS;
+			}
+		}
 
 		// Return draw when out of pieces
 		if (getPlayerTurn().getPieceCount() == 0) {
@@ -73,6 +83,12 @@ public abstract class HantoBaseGame implements HantoGame {
 		}
 		// Move/Place the piece
 		movePiece(orig, dest, pieceType, getPlayerTurn());
+		
+		if (!isContiguousBoard()) {
+			board.clear();
+			board.putAll(preMoveBoard);
+			throw new HantoException("This is not a valid board state, move reverted");
+		}
 		// Check if the specific hanto game has rules that change the outcome of
 		// this movement after logic
 		specificRuleResult = postRuleSetCheck(pieceType, orig, dest);
@@ -129,6 +145,7 @@ public abstract class HantoBaseGame implements HantoGame {
 		if (numTurns == FIRST_TURN && to.equals(CENTER_HEX)) {
 			return true;
 		}
+		// Check for second move condition
 		if (numTurns == SECOND_TURN
 				&& CENTER_HEX.surroundingHexes().contains(to)) {
 			return true;
@@ -212,8 +229,6 @@ public abstract class HantoBaseGame implements HantoGame {
 				}
 			}
 		}
-		// Check against all scenarios including first players 7th turn which
-		// means he's out of pieces and loses
 		if (redLoses && blueLoses) {
 			return MoveResult.DRAW;
 		} else if (redLoses) {
@@ -273,6 +288,47 @@ public abstract class HantoBaseGame implements HantoGame {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * Specifies if the current board state is contiguous (All pieces are connected)
+	 * Top level method for recursive isContiguousBoardR
+	 * @return True if the board is contiguous, false otherwise
+	 */
+	protected boolean isContiguousBoard() {
+		HantoPosition currentVisit = null;
+		List<HantoPosition> hasVisited = new ArrayList<HantoPosition>();
+		List<HantoPosition> toVisit = new ArrayList<HantoPosition>();
+		List<HantoPosition> canVisit = new ArrayList<HantoPosition>();
+		for (Entry<HantoPosition, Piece> entry : board.entrySet()) {
+			toVisit.add(entry.getKey());
+		}
+		currentVisit = toVisit.get(0);
+		return isContiguousBoardR(currentVisit, toVisit, canVisit, hasVisited);
+	}
+
+	private boolean isContiguousBoardR(HantoPosition current,
+			List<HantoPosition> toVisit, List<HantoPosition> canVisit,
+			List<HantoPosition> hasVisited) {
+		hasVisited.add(current);
+		toVisit.remove(current);
+		canVisit.remove(current);
+		for (int i = 0; i < current.surroundingHexes().size(); i++) {
+			HantoPosition currentAdjacent = current.surroundingHexes().get(i);
+			if (getPieceAt(currentAdjacent) != null
+					&& !hasVisited.contains(currentAdjacent)
+					&& !canVisit.contains(currentAdjacent)) {
+				canVisit.add(currentAdjacent);
+			}
+		}
+		if (toVisit.isEmpty()) {
+			return true;
+		} else if (canVisit.isEmpty() && !toVisit.isEmpty()) {
+			return false;
+		} else {
+			return isContiguousBoardR(canVisit.get(0), toVisit, canVisit,
+					hasVisited);
+		}
 	}
 
 	/**

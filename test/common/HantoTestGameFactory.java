@@ -14,6 +14,7 @@ import hanto.common.*;
 import hanto.jxhernandez.HantoGameFactory;
 import hanto.jxhernandez.alpha.AlphaHantoGame;
 import hanto.jxhernandez.beta.BetaHantoGame;
+import hanto.jxhernandez.delta.DeltaHantoTestGame;
 import hanto.jxhernandez.gamma.GammaHantoTestGame;
 
 /**
@@ -62,6 +63,9 @@ public class HantoTestGameFactory
 		switch (gameId) {
 			case GAMMA_HANTO:
 				game = new GammaHantoTestGame(movesFirst);
+				break;
+			case DELTA_HANTO:
+				game = new DeltaHantoTestGame(movesFirst);
 				break;
 		}
 		return game;
