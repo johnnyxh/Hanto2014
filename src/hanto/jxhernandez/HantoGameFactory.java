@@ -11,12 +11,13 @@
 package hanto.jxhernandez;
 
 import common.*;
-
 import hanto.common.HantoGame;
 import hanto.common.HantoGameID;
 import hanto.common.HantoPlayerColor;
 import hanto.jxhernandez.alpha.AlphaHantoGame;
 import hanto.jxhernandez.beta.BetaHantoGame;
+import hanto.jxhernandez.delta.DeltaHantoGame;
+import hanto.jxhernandez.gamma.GammaHantoGame;
 
 /**
  * This is a singleton class that provides a factory to create an instance of
@@ -72,6 +73,12 @@ public class HantoGameFactory {
 			break;
 		case BETA_HANTO:
 			game = new BetaHantoGame(movesFirst);
+			break;
+		case GAMMA_HANTO:
+			game = new GammaHantoGame(movesFirst);
+			break;
+		case DELTA_HANTO:
+			game = new DeltaHantoGame(movesFirst);
 			break;
 		}
 		// Put in code for beta hanto later
