@@ -39,7 +39,7 @@ public class Player {
 	 * @param piece The piece type being added to this player
 	 * @param num The number of pieces being added
 	 */
-	public void addToReseve(HantoPieceType piece, int num) {
+	public void addToReserve(HantoPieceType piece, int num) {
 		for(int i=0; i < num; i++) {
 			reserves.add(piece);
 		}

@@ -44,9 +44,9 @@ public class BetaHantoGame extends HantoBaseGame {
 	public BetaHantoGame(HantoPlayerColor movesFirst) {
 		super(movesFirst);
 		// Initialize inventories
-		firstPlayer.addToReseve(HantoPieceType.SPARROW, 5);
+		firstPlayer.addToReserve(HantoPieceType.SPARROW, 5);
 		firstPlayer.addToReserve(HantoPieceType.BUTTERFLY);
-		secondPlayer.addToReseve(HantoPieceType.SPARROW, 5);
+		secondPlayer.addToReserve(HantoPieceType.SPARROW, 5);
 		secondPlayer.addToReserve(HantoPieceType.BUTTERFLY);
 	}
 
