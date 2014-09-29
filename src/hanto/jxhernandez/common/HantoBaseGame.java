@@ -26,9 +26,9 @@ import hanto.common.MoveResult;
 
 public abstract class HantoBaseGame implements HantoGame {
 
-	protected static final int HANTO_CENTER_X = 0;
-	protected static final int HANTO_CENTER_Y = 0;
+	protected static final HantoPosition CENTER_HEX = new HantoPosition(0, 0);
 	protected static final int FIRST_TURN = 0;
+	protected static final int SECOND_TURN = 1;
 
 	protected Map<HantoPosition, Piece> board = new HashMap<HantoPosition, Piece>();
 	protected int numTurns;
@@ -51,21 +51,35 @@ public abstract class HantoBaseGame implements HantoGame {
 
 		HantoPosition orig = HantoPosition.coordinateToPosition(from);
 		HantoPosition dest = HantoPosition.coordinateToPosition(to);
-		
+		MoveResult specificRuleResult;
+
 		// Return draw when out of pieces
 		if (getPlayerTurn().getPieceCount() == 0) {
 			return MoveResult.DRAW;
 		}
-		
-		preRuleSetCheck(pieceType, orig, dest);
-
+		// Check if the specific hanto game has rules that change the outcome of
+		// this movement before logic
+		specificRuleResult = preRuleSetCheck(pieceType, orig, dest);
+		if (specificRuleResult != null) {
+			return specificRuleResult;
+		}
+		// Check if the movement is valid
 		if (!isValidMove(orig, dest, pieceType)) {
 			throw new HantoException("This is not a valid movement");
 		}
-		if (!isValidDestination(dest, getPlayerTurn().getPlayerColor())) {
+		// Check if the destination is valid
+		if (!isValidDestination(orig, dest, getPlayerTurn().getPlayerColor())) {
 			throw new HantoException("This is not a valid destination");
 		}
+		// Move/Place the piece
 		movePiece(orig, dest, pieceType, getPlayerTurn());
+		// Check if the specific hanto game has rules that change the outcome of
+		// this movement after logic
+		specificRuleResult = postRuleSetCheck(pieceType, orig, dest);
+		if (specificRuleResult != null) {
+			return specificRuleResult;
+		}
+		// Return the state of the game after the move
 		return checkGame();
 	}
 
@@ -107,13 +121,16 @@ public abstract class HantoBaseGame implements HantoGame {
 	 *            The color of the moving player
 	 * @return True if the destination is valid, false otherwise
 	 */
-	protected boolean isValidDestination(HantoPosition to,
+	protected boolean isValidDestination(HantoPosition orig, HantoPosition to,
 			HantoPlayerColor movingColor) {
 		boolean isValid = false;
 
 		// Check for first move condition
-		if (numTurns == FIRST_TURN
-				&& (to.getX() == HANTO_CENTER_X && to.getY() == HANTO_CENTER_Y)) {
+		if (numTurns == FIRST_TURN && to.equals(CENTER_HEX)) {
+			return true;
+		}
+		if (numTurns == SECOND_TURN
+				&& CENTER_HEX.surroundingHexes().contains(to)) {
 			return true;
 		}
 
@@ -122,7 +139,10 @@ public abstract class HantoBaseGame implements HantoGame {
 		// Gather a list of friendly and enemy occupied positions on the board
 		for (Entry<HantoPosition, Piece> entry : board.entrySet()) {
 			if (entry.getValue().getColor() == movingColor) {
-				friendlyPieces.add(entry.getKey());
+				// Be sure not to count itself if moving existing piece
+				if (!entry.getKey().equals(orig)) {
+					friendlyPieces.add(entry.getKey());
+				}
 			} else {
 				enemyPieces.add(entry.getKey());
 			}
@@ -209,6 +229,9 @@ public abstract class HantoBaseGame implements HantoGame {
 			HantoPieceType piece, Player player) throws HantoException {
 		if (orig != null) {
 			// Change the piece at position and move it to new position
+			board.remove(orig);
+			board.put(dest, new Piece(piece, player.getPlayerColor()));
+			numTurns++;
 		} else {
 			// This will throw an exception if the piece isn't in reserve
 			player.removeFromReserve(piece);
@@ -220,8 +243,21 @@ public abstract class HantoBaseGame implements HantoGame {
 	protected boolean isValidMove(HantoPosition orig, HantoPosition dest,
 			HantoPieceType pieceType) {
 		if (orig != null) {
-			// Check if the move is valid
-			return false;
+			// Only walking 1 square
+			if (orig.surroundingHexes().contains(dest)
+					&& getPieceAt(orig).getColor() == getPlayerTurn()
+							.getPlayerColor()) {
+				List<HantoPosition> walkingSpaceHexes = orig.surroundingHexes();
+				walkingSpaceHexes.retainAll(dest.surroundingHexes());
+				if (getPieceAt(walkingSpaceHexes.get(0)) == null
+						|| getPieceAt(walkingSpaceHexes.get(1)) == null) {
+					return true;
+				} else {
+					return false;
+				}
+			} else {
+				return false;
+			}
 		} else {
 			// Its not being moved so check for valid destination
 			return true;
@@ -239,15 +275,46 @@ public abstract class HantoBaseGame implements HantoGame {
 		return false;
 	}
 
-	protected void preRuleSetCheck(HantoPieceType pieceType,
+	/**
+	 * A method for the use of specific versions of Hanto to override to perform
+	 * checks before the general logic of movement is checked for
+	 * 
+	 * @param pieceType
+	 *            The moving piece
+	 * @param from
+	 *            The original position
+	 * @param to
+	 *            The destination position
+	 * @return A MoveResult if the rules of the specific Hanto game decides an
+	 *         outcome before logic comes into play, null otherwise
+	 * @throws HantoException
+	 *             If the rules of the specific Hanto game are violated in some
+	 *             way
+	 */
+	protected MoveResult preRuleSetCheck(HantoPieceType pieceType,
 			HantoCoordinate from, HantoCoordinate to) throws HantoException {
-		// Method for specific games to implement
+		return null;
 	}
 
-	protected void postRuleSetCheck(HantoPieceType pieceType,
-			HantoCoordinate from, HantoCoordinate to)
-			throws HantoException {
-		// Method for specific games to implement
+	/**
+	 * A method for the use of specific versions of Hanto to override to perform
+	 * checks after the general logic of movement is checked for
+	 * 
+	 * @param pieceType
+	 *            The moving piece
+	 * @param from
+	 *            The original position
+	 * @param to
+	 *            The destination position
+	 * @return A MoveResult if the rules of the specific Hanto game decides an
+	 *         outcome after general logic comes into play, null otherwise
+	 * @throws HantoException
+	 *             If the rules of the specific Hanto game are violated in some
+	 *             way
+	 */
+	protected MoveResult postRuleSetCheck(HantoPieceType pieceType,
+			HantoCoordinate from, HantoCoordinate to) throws HantoException {
+		return null;
 	}
 
 	public int getNumTurns() {
@@ -277,7 +344,7 @@ public abstract class HantoBaseGame implements HantoGame {
 	public Map<HantoPosition, Piece> getBoard() {
 		return board;
 	}
-	
+
 	public void setBoard(Map<HantoPosition, Piece> board) {
 		this.board = board;
 	}

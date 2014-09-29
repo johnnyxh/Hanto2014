@@ -19,6 +19,7 @@ import hanto.common.HantoException;
 import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
+import hanto.common.MoveResult;
 import hanto.jxhernandez.common.HantoBaseGame;
 import hanto.jxhernandez.common.HantoPosition;
 import hanto.jxhernandez.common.Piece;
@@ -36,7 +37,9 @@ public class BetaHantoGame extends HantoBaseGame {
 
 	/**
 	 * Constructor for BetaHantoGame.
-	 * @param movesFirst HantoPlayerColor Player color that will move first
+	 * 
+	 * @param movesFirst
+	 *            HantoPlayerColor Player color that will move first
 	 */
 	public BetaHantoGame(HantoPlayerColor movesFirst) {
 		super(movesFirst);
@@ -47,16 +50,18 @@ public class BetaHantoGame extends HantoBaseGame {
 		secondPlayer.addToReserve(HantoPieceType.BUTTERFLY);
 	}
 
-	// In this version of hanto a valid destination is next to both friendly and enemy pieces
+	// In this version of hanto a valid destination is next to both friendly and
+	// enemy pieces
 	@Override
-	protected boolean isValidDestination(HantoPosition to, HantoPlayerColor movingColor) {
+	protected boolean isValidDestination(HantoPosition orig, HantoPosition to,
+			HantoPlayerColor movingColor) {
 		boolean isValid = false;
-		
+
 		if (numTurns == FIRST_TURN
-				&& (to.getX() == HANTO_CENTER_X && to.getY() == HANTO_CENTER_Y)) {
+				&& to.equals(CENTER_HEX)) {
 			return true;
-		}	
-		
+		}
+
 		List<HantoPosition> friendlyPieces = new ArrayList<HantoPosition>();
 		List<HantoPosition> enemyPieces = new ArrayList<HantoPosition>();
 		// Gather a list of friendly and enemy occupied positions on the board
@@ -89,20 +94,22 @@ public class BetaHantoGame extends HantoBaseGame {
 		}
 		return isValid;
 	}
-	
+
 	@Override
-	protected void preRuleSetCheck(HantoPieceType pieceType, HantoCoordinate from, HantoCoordinate to) throws HantoException {
+	protected MoveResult preRuleSetCheck(HantoPieceType pieceType,
+			HantoCoordinate from, HantoCoordinate to) throws HantoException {
 		if (from != null) {
 			throw new HantoException("Illegal Move: can't move pieces");
 		}
-		if (numTurns == FOURTH_TURN_FIRST_P
-				|| numTurns == FOURTH_TURN_SECOND_P) {
+		if (numTurns == FOURTH_TURN_FIRST_P || numTurns == FOURTH_TURN_SECOND_P) {
 			if (!hasPlacedButterfly(getPlayerTurn().getPlayerColor())
 					&& pieceType != HantoPieceType.BUTTERFLY) {
 				throw new HantoException(
 						"Illegal move: hasn't placed butterfly by 4th turn");
 			}
 		}
+
+		return null;
 	}
 
 }
