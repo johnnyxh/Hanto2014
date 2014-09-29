@@ -6,6 +6,8 @@ import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
 import hanto.jxhernandez.common.HantoBaseGame;
+import hanto.jxhernandez.common.HantoMove;
+import hanto.jxhernandez.common.HantoMoveRule;
 
 public class GammaHantoGame extends HantoBaseGame {
 	
@@ -18,6 +20,11 @@ public class GammaHantoGame extends HantoBaseGame {
 		firstPlayer.addToReserve(HantoPieceType.BUTTERFLY);
 		secondPlayer.addToReserve(HantoPieceType.SPARROW, 5);
 		secondPlayer.addToReserve(HantoPieceType.BUTTERFLY);
+		// Initialize piece move rules
+		HantoMoveRule sparrowRule = new HantoMoveRule(HantoPieceType.SPARROW, HantoMove.WALK, 1);
+		HantoMoveRule butterflyRule = new HantoMoveRule(HantoPieceType.SPARROW, HantoMove.WALK, 1);
+		pieceMoves.add(sparrowRule);
+		pieceMoves.add(butterflyRule);
 	}
 	
 	@Override

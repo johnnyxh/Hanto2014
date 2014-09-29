@@ -31,6 +31,7 @@ public abstract class HantoBaseGame implements HantoGame {
 	protected static final int SECOND_TURN = 1;
 
 	protected Map<HantoPosition, Piece> board = new HashMap<HantoPosition, Piece>();
+	protected List<HantoMoveRule> pieceMoves = new ArrayList<HantoMoveRule>();
 	protected int numTurns;
 	protected Player firstPlayer;
 	protected Player secondPlayer;
@@ -259,6 +260,7 @@ public abstract class HantoBaseGame implements HantoGame {
 			HantoPieceType pieceType) {
 		if (orig != null) {
 			// Only walking 1 square
+			/*
 			if (orig.surroundingHexes().contains(dest)
 					&& getPieceAt(orig).getColor() == getPlayerTurn()
 							.getPlayerColor()) {
@@ -273,6 +275,16 @@ public abstract class HantoBaseGame implements HantoGame {
 			} else {
 				return false;
 			}
+			*/
+			if (getPieceAt(orig).getColor() != getPlayerTurn().getPlayerColor()) {
+				return false;
+			}
+			for(int i=0; i < pieceMoves.size(); i++) {
+				if (pieceMoves.get(i).getPiece() == pieceType) {
+					return pieceMoves.get(i).getMoveValidator().isMoveValid(orig, dest, board);
+				}
+			}
+			return false;
 		} else {
 			// Its not being moved so check for valid destination
 			return true;
