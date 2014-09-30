@@ -9,19 +9,16 @@ public class HantoMoveRule {
 	
 	public HantoMoveRule(HantoPieceType piece, HantoMove move, int numSpaces) {
 		this.piece = piece;
-		if (numSpaces <= 0) {
-			this.moveValidator = HantoMoveFactory.getInstance().makeMoveValidator(move);
-		} else {
-			this.moveValidator = HantoMoveFactory.getInstance().makeMoveValidator(move, numSpaces);
-		}
+		this.moveValidator = HantoMoveFactory.getInstance().makeMoveValidator(move, numSpaces);
+	}
+	
+	public HantoMoveRule(HantoPieceType piece, HantoMove move) {
+		this.piece = piece;
+		this.moveValidator = HantoMoveFactory.getInstance().makeMoveValidator(move);
 	}
 
 	public HantoPieceType getPiece() {
 		return piece;
-	}
-
-	public void setPiece(HantoPieceType piece) {
-		this.piece = piece;
 	}
 	
 	public HantoMoveValidator getMoveValidator() {

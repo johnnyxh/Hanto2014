@@ -52,8 +52,15 @@ public abstract class HantoBaseGame implements HantoGame {
 
 		HantoPosition orig = HantoPosition.coordinateToPosition(from);
 		HantoPosition dest = HantoPosition.coordinateToPosition(to);
-		Map<HantoPosition, Piece> preMoveBoard = new HashMap<HantoPosition, Piece>(board);
+		Map<HantoPosition, Piece> preMoveBoard = new HashMap<HantoPosition, Piece>(
+				board);
 		MoveResult specificRuleResult;
+
+		if (orig != null &&((getPieceAt(orig).getColor() != getPlayerTurn().getPlayerColor())
+				|| (getPieceAt(orig).getType() != pieceType))) {
+			throw new HantoException(
+					"A piece of that type or your color was not found on that hex");
+		}
 
 		// Resignation check
 		if (pieceType == null && from == null && to == null) {
@@ -84,11 +91,12 @@ public abstract class HantoBaseGame implements HantoGame {
 		}
 		// Move/Place the piece
 		movePiece(orig, dest, pieceType, getPlayerTurn());
-		
+
 		if (!isContiguousBoard()) {
 			board.clear();
 			board.putAll(preMoveBoard);
-			throw new HantoException("This is not a valid board state, move reverted");
+			throw new HantoException(
+					"This is not a valid board state, move reverted");
 		}
 		// Check if the specific hanto game has rules that change the outcome of
 		// this movement after logic
@@ -259,29 +267,10 @@ public abstract class HantoBaseGame implements HantoGame {
 	protected boolean isValidMove(HantoPosition orig, HantoPosition dest,
 			HantoPieceType pieceType) {
 		if (orig != null) {
-			// Only walking 1 square
-			/*
-			if (orig.surroundingHexes().contains(dest)
-					&& getPieceAt(orig).getColor() == getPlayerTurn()
-							.getPlayerColor()) {
-				List<HantoPosition> walkingSpaceHexes = orig.surroundingHexes();
-				walkingSpaceHexes.retainAll(dest.surroundingHexes());
-				if (getPieceAt(walkingSpaceHexes.get(0)) == null
-						|| getPieceAt(walkingSpaceHexes.get(1)) == null) {
-					return true;
-				} else {
-					return false;
-				}
-			} else {
-				return false;
-			}
-			*/
-			if (getPieceAt(orig).getColor() != getPlayerTurn().getPlayerColor()) {
-				return false;
-			}
-			for(int i=0; i < pieceMoves.size(); i++) {
+			for (int i = 0; i < pieceMoves.size(); i++) {
 				if (pieceMoves.get(i).getPiece() == pieceType) {
-					return pieceMoves.get(i).getMoveValidator().isMoveValid(orig, dest, board);
+					return pieceMoves.get(i).getMoveValidator()
+							.isMoveValid(orig, dest, board);
 				}
 			}
 			return false;
@@ -303,8 +292,9 @@ public abstract class HantoBaseGame implements HantoGame {
 	}
 
 	/**
-	 * Specifies if the current board state is contiguous (All pieces are connected)
-	 * Top level method for recursive isContiguousBoardR
+	 * Specifies if the current board state is contiguous (All pieces are
+	 * connected) Top level method for recursive isContiguousBoardR
+	 * 
 	 * @return True if the board is contiguous, false otherwise
 	 */
 	protected boolean isContiguousBoard() {
