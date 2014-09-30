@@ -32,9 +32,6 @@ import hanto.jxhernandez.common.Piece;
  */
 public class BetaHantoGame extends HantoBaseGame {
 
-	private static final int FOURTH_TURN_FIRST_P = 6;
-	private static final int FOURTH_TURN_SECOND_P = 7;
-
 	/**
 	 * Constructor for BetaHantoGame.
 	 * 
@@ -101,12 +98,10 @@ public class BetaHantoGame extends HantoBaseGame {
 		if (from != null) {
 			throw new HantoException("Illegal Move: can't move pieces");
 		}
-		if (numTurns == FOURTH_TURN_FIRST_P || numTurns == FOURTH_TURN_SECOND_P) {
-			if (!hasPlacedButterfly(getPlayerTurn().getPlayerColor())
-					&& pieceType != HantoPieceType.BUTTERFLY) {
-				throw new HantoException(
-						"Illegal move: hasn't placed butterfly by 4th turn");
-			}
+		
+		// Return draw when out of pieces
+		if (getPlayerTurn().getPieceCount() == 0) {
+			return MoveResult.DRAW;
 		}
 
 		return null;

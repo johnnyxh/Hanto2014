@@ -39,7 +39,8 @@ public class DeltaHantoGameTests {
 		initialPieces[4] = (new PieceLocationPair(HantoPlayerColor.RED, HantoPieceType.SPARROW, new HantoPosition(1,1)));
 		initialPieces[5] = (new PieceLocationPair(HantoPlayerColor.BLUE, HantoPieceType.SPARROW, new HantoPosition(-2,0)));
 		testGame.initializeBoard(initialPieces);
-		testGame.setTurnNumber(7);
+		testGame.setTurnNumber(4);
+		testGame.setPlayerMoving(HantoPlayerColor.RED);
 		assertEquals(MoveResult.OK, testGame.makeMove(HantoPieceType.SPARROW, new HantoPosition(1,1), new HantoPosition(1,-1)));
 	}
 	// I had never checked if an opponents piece was being moved before this
@@ -54,7 +55,8 @@ public class DeltaHantoGameTests {
 		initialPieces[4] = (new PieceLocationPair(HantoPlayerColor.BLUE, HantoPieceType.SPARROW, new HantoPosition(1,1)));
 		initialPieces[5] = (new PieceLocationPair(HantoPlayerColor.RED, HantoPieceType.SPARROW, new HantoPosition(-2,0)));
 		testGame.initializeBoard(initialPieces);
-		testGame.setTurnNumber(7);
+		testGame.setTurnNumber(4);
+		testGame.setPlayerMoving(HantoPlayerColor.BLUE);
 		assertEquals(MoveResult.OK, testGame.makeMove(HantoPieceType.SPARROW, new HantoPosition(-2,0), new HantoPosition(-2,2)));
 	}
 	
@@ -69,7 +71,8 @@ public class DeltaHantoGameTests {
 		initialPieces[4] = (new PieceLocationPair(HantoPlayerColor.RED, HantoPieceType.CRAB, new HantoPosition(1,1)));
 		initialPieces[5] = (new PieceLocationPair(HantoPlayerColor.BLUE, HantoPieceType.SPARROW, new HantoPosition(-2,0)));
 		testGame.initializeBoard(initialPieces);
-		testGame.setTurnNumber(7);
+		testGame.setTurnNumber(4);
+		testGame.setPlayerMoving(HantoPlayerColor.RED);
 		assertEquals(MoveResult.OK, testGame.makeMove(HantoPieceType.CRAB, new HantoPosition(1,1), new HantoPosition(1,-1)));
 	}
 	// I also didn't check if the piece given in makeMove was the piece actually on that space
@@ -84,8 +87,27 @@ public class DeltaHantoGameTests {
 		initialPieces[4] = (new PieceLocationPair(HantoPlayerColor.RED, HantoPieceType.CRAB, new HantoPosition(1,1)));
 		initialPieces[5] = (new PieceLocationPair(HantoPlayerColor.BLUE, HantoPieceType.SPARROW, new HantoPosition(-2,0)));
 		testGame.initializeBoard(initialPieces);
-		testGame.setTurnNumber(7);
+		testGame.setTurnNumber(4);
+		testGame.setPlayerMoving(HantoPlayerColor.RED);
 		assertEquals(MoveResult.OK, testGame.makeMove(HantoPieceType.SPARROW, new HantoPosition(1,1), new HantoPosition(1,-1)));
+	}
+	
+	@Test(expected=HantoException.class)
+	public void movingAfterWinnerDeclared() throws HantoException {
+		HantoTestGame testGame = HantoTestGameFactory.getInstance().makeHantoTestGame(HantoGameID.DELTA_HANTO, HantoPlayerColor.RED);
+		PieceLocationPair[] initialPieces = new PieceLocationPair[6];
+		initialPieces[0] = (new PieceLocationPair(HantoPlayerColor.RED, HantoPieceType.BUTTERFLY, new HantoPosition(0,0)));
+		initialPieces[1] = (new PieceLocationPair(HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY, new HantoPosition(0,1)));
+		initialPieces[2] = (new PieceLocationPair(HantoPlayerColor.RED, HantoPieceType.SPARROW, new HantoPosition(-1,0)));
+		initialPieces[3] = (new PieceLocationPair(HantoPlayerColor.BLUE, HantoPieceType.SPARROW, new HantoPosition(1,0)));
+		initialPieces[4] = (new PieceLocationPair(HantoPlayerColor.RED, HantoPieceType.CRAB, new HantoPosition(1,-1)));
+		initialPieces[5] = (new PieceLocationPair(HantoPlayerColor.BLUE, HantoPieceType.SPARROW, new HantoPosition(-1,1)));
+		testGame.initializeBoard(initialPieces);
+		testGame.setTurnNumber(4);
+		testGame.setPlayerMoving(HantoPlayerColor.RED);
+		// Winner declared here
+		assertEquals(MoveResult.BLUE_WINS, testGame.makeMove(HantoPieceType.CRAB, null, new HantoPosition(0,-1)));
+		testGame.makeMove(HantoPieceType.CRAB, null, new HantoPosition(-2,2));
 	}
 
 }

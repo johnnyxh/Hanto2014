@@ -11,7 +11,7 @@ import hanto.jxhernandez.common.HantoMoveRule;
 
 public class GammaHantoGame extends HantoBaseGame {
 	
-	private static final int MAX_TURN_NUM = 20;
+	private static final int MAX_TURN_NUM = 40;
 	
 	public GammaHantoGame(HantoPlayerColor movesFirst) {
 		super(movesFirst);

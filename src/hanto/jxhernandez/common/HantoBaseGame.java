@@ -29,12 +29,15 @@ public abstract class HantoBaseGame implements HantoGame {
 	protected static final HantoPosition CENTER_HEX = new HantoPosition(0, 0);
 	protected static final int FIRST_TURN = 0;
 	protected static final int SECOND_TURN = 1;
+	private static final int FOURTH_TURN_FIRST_P = 6;
+	private static final int FOURTH_TURN_SECOND_P = 7;
 
 	protected Map<HantoPosition, Piece> board = new HashMap<HantoPosition, Piece>();
 	protected List<HantoMoveRule> pieceMoves = new ArrayList<HantoMoveRule>();
 	protected int numTurns;
 	protected Player firstPlayer;
 	protected Player secondPlayer;
+	protected MoveResult winner;
 
 	public HantoBaseGame(HantoPlayerColor movesFirst) {
 		numTurns = 0;
@@ -44,6 +47,7 @@ public abstract class HantoBaseGame implements HantoGame {
 		} else {
 			secondPlayer = new Player(HantoPlayerColor.RED);
 		}
+		winner = null;
 	}
 
 	@Override
@@ -55,9 +59,15 @@ public abstract class HantoBaseGame implements HantoGame {
 		Map<HantoPosition, Piece> preMoveBoard = new HashMap<HantoPosition, Piece>(
 				board);
 		MoveResult specificRuleResult;
+		MoveResult boardResults;
 
-		if (orig != null &&((getPieceAt(orig).getColor() != getPlayerTurn().getPlayerColor())
-				|| (getPieceAt(orig).getType() != pieceType))) {
+		if (winner != null && winner != MoveResult.OK) {
+			throw new HantoException("A winner has already been declared");
+		}
+
+		if (orig != null
+				&& ((getPieceAt(orig).getColor() != getPlayerTurn()
+						.getPlayerColor()) || (getPieceAt(orig).getType() != pieceType))) {
 			throw new HantoException(
 					"A piece of that type or your color was not found on that hex");
 		}
@@ -65,16 +75,22 @@ public abstract class HantoBaseGame implements HantoGame {
 		// Resignation check
 		if (pieceType == null && from == null && to == null) {
 			if (getPlayerTurn().getPlayerColor() == HantoPlayerColor.RED) {
+				winner = MoveResult.BLUE_WINS;
 				return MoveResult.BLUE_WINS;
 			} else {
+				winner = MoveResult.RED_WINS;
 				return MoveResult.RED_WINS;
 			}
 		}
 
-		// Return draw when out of pieces
-		if (getPlayerTurn().getPieceCount() == 0) {
-			return MoveResult.DRAW;
+		if (numTurns == FOURTH_TURN_FIRST_P || numTurns == FOURTH_TURN_SECOND_P) {
+			if (!hasPlacedButterfly(getPlayerTurn().getPlayerColor())
+					&& pieceType != HantoPieceType.BUTTERFLY) {
+				throw new HantoException(
+						"Illegal move: hasn't placed butterfly by 4th turn");
+			}
 		}
+
 		// Check if the specific hanto game has rules that change the outcome of
 		// this movement before logic
 		specificRuleResult = preRuleSetCheck(pieceType, orig, dest);
@@ -101,11 +117,16 @@ public abstract class HantoBaseGame implements HantoGame {
 		// Check if the specific hanto game has rules that change the outcome of
 		// this movement after logic
 		specificRuleResult = postRuleSetCheck(pieceType, orig, dest);
-		if (specificRuleResult != null) {
+		boardResults = checkGame();
+		if (boardResults == MoveResult.OK && specificRuleResult != null) {
+			winner = specificRuleResult;
 			return specificRuleResult;
+		} else if (boardResults != MoveResult.OK) {
+			winner = boardResults;
+			return boardResults;
+		} else {
+			return boardResults;
 		}
-		// Return the state of the game after the move
-		return checkGame();
 	}
 
 	@Override
@@ -157,6 +178,10 @@ public abstract class HantoBaseGame implements HantoGame {
 		// Check for second move condition
 		if (numTurns == SECOND_TURN
 				&& CENTER_HEX.surroundingHexes().contains(to)) {
+			return true;
+		}
+		// Check for movement
+		if (orig != null) {
 			return true;
 		}
 

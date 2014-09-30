@@ -67,16 +67,20 @@ public abstract class HantoBaseTestGame implements HantoTestGame {
 
 	@Override
 	public void setTurnNumber(int turnNumber) {
-		testGame.setNumTurns(turnNumber-1);
+		testGame.setNumTurns((turnNumber*2));
 	}
 
 	@Override
 	public void setPlayerMoving(HantoPlayerColor player) {
 		if (!(testGame.getPlayerTurn().getPlayerColor() == player)) {
+			/*
 			Player tempPlayer = testGame.getFirstPlayer();
 			testGame.setFirstPlayer(testGame.getSecondPlayer());
 			testGame.setSecondPlayer(tempPlayer);
+			*/
+			testGame.setNumTurns(testGame.getNumTurns()-1);
 		}
+		
 	}
 
 	@Override
