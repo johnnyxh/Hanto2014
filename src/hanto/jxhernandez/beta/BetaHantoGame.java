@@ -15,8 +15,6 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import hanto.common.HantoCoordinate;
-import hanto.common.HantoException;
-import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
@@ -94,10 +92,7 @@ public class BetaHantoGame extends HantoBaseGame {
 
 	@Override
 	protected MoveResult preRuleSetCheck(HantoPieceType pieceType,
-			HantoCoordinate from, HantoCoordinate to) throws HantoException {
-		if (from != null) {
-			throw new HantoException("Illegal Move: can't move pieces");
-		}
+			HantoCoordinate from, HantoCoordinate to) {
 		
 		// Return draw when out of pieces
 		if (getPlayerTurn().getPieceCount() == 0) {

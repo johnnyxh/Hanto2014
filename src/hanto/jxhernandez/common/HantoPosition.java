@@ -136,7 +136,7 @@ public class HantoPosition implements HantoCoordinate {
 		if (coord == null) {
 			return null;
 		}
-		return new HantoPosition(coord.getX(),coord.getY());
+		return new HantoPosition(coord.getX(), coord.getY());
 	}
 
 }

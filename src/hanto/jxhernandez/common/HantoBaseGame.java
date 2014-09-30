@@ -24,6 +24,11 @@ import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.MoveResult;
 
+/**
+ * An abstract class containing the core logic for a Hanto game
+ * 
+ * @author johnny
+ */
 public abstract class HantoBaseGame implements HantoGame {
 
 	protected static final HantoPosition CENTER_HEX = new HantoPosition(0, 0);
@@ -39,9 +44,15 @@ public abstract class HantoBaseGame implements HantoGame {
 	protected Player secondPlayer;
 	protected MoveResult winner;
 
-	public HantoBaseGame(HantoPlayerColor movesFirst) {
+	/**
+	 * Constructor for HantoBaseGame.
+	 * 
+	 * @param movesFirst
+	 *            HantoPlayerColor Color for first turn
+	 */
+	protected HantoBaseGame(HantoPlayerColor movesFirst) {
 		numTurns = 0;
-		this.firstPlayer = new Player(movesFirst);
+		firstPlayer = new Player(movesFirst);
 		if (movesFirst == HantoPlayerColor.RED) {
 			secondPlayer = new Player(HantoPlayerColor.BLUE);
 		} else {
@@ -165,6 +176,9 @@ public abstract class HantoBaseGame implements HantoGame {
 	 *            Destination position
 	 * @param movingColor
 	 *            The color of the moving player
+	 * 
+	 * @param orig
+	 *            HantoPosition
 	 * @return True if the destination is valid, false otherwise
 	 */
 	protected boolean isValidDestination(HantoPosition orig, HantoPosition to,
@@ -219,6 +233,12 @@ public abstract class HantoBaseGame implements HantoGame {
 		return isValid;
 	}
 
+	/**
+	 * Method checkGame. Checks the board state to see if there is a winner
+	 * 
+	 * @return MoveResult RED_WINS or BLUE_WINS for the corresponding winner
+	 *         DRAW if both butterflies captured or OK otherwise
+	 */
 	protected MoveResult checkGame() {
 		boolean redLoses = false;
 		boolean blueLoses = false;
@@ -274,6 +294,19 @@ public abstract class HantoBaseGame implements HantoGame {
 		}
 	}
 
+	/**
+	 * Method movePiece. Moves or Places the given piece on the board
+	 * 
+	 * @param orig
+	 *            HantoPosition The original location of the piece. Null for in the player reserves
+	 * @param dest
+	 *            HantoPosition The destination for this piece
+	 * @param piece
+	 *            HantoPieceType The piece being moved
+	 * @param player
+	 *            Player The player performing the move or placement
+	 * @throws HantoException If the player does not have this piece in reserve when placing
+	 */
 	protected void movePiece(HantoPosition orig, HantoPosition dest,
 			HantoPieceType piece, Player player) throws HantoException {
 		if (orig != null) {
@@ -289,6 +322,17 @@ public abstract class HantoBaseGame implements HantoGame {
 		}
 	}
 
+	/**
+	 * Method isValidMove. Checks if the movement is valid.
+	 * 
+	 * @param orig
+	 *            HantoPosition Where the piece is currently on the board
+	 * @param dest
+	 *            HantoPosition The destination of the piece
+	 * @param pieceType
+	 *            HantoPieceType The piece type that is being moved
+	 * @return boolean True if the move is possible or is being placed, false otherwise
+	 */
 	protected boolean isValidMove(HantoPosition orig, HantoPosition dest,
 			HantoPieceType pieceType) {
 		if (orig != null) {
@@ -306,6 +350,13 @@ public abstract class HantoBaseGame implements HantoGame {
 
 	}
 
+	/**
+	 * Method hasPlacedButterfly. Checks if the butterfly of this color has been placed
+	 * 
+	 * @param movingColor
+	 *            HantoPlayerColor The color of the butterfly you wish to check for
+	 * @return boolean True if it has been placed, false otherwise
+	 */
 	protected boolean hasPlacedButterfly(HantoPlayerColor movingColor) {
 		for (Entry<HantoPosition, Piece> entry : board.entrySet()) {
 			if (entry.getValue().getType() == HantoPieceType.BUTTERFLY
@@ -368,14 +419,13 @@ public abstract class HantoBaseGame implements HantoGame {
 	 *            The original position
 	 * @param to
 	 *            The destination position
+	 * 
+	 * 
 	 * @return A MoveResult if the rules of the specific Hanto game decides an
 	 *         outcome before logic comes into play, null otherwise
-	 * @throws HantoException
-	 *             If the rules of the specific Hanto game are violated in some
-	 *             way
 	 */
 	protected MoveResult preRuleSetCheck(HantoPieceType pieceType,
-			HantoCoordinate from, HantoCoordinate to) throws HantoException {
+			HantoCoordinate from, HantoCoordinate to) {
 		return null;
 	}
 
@@ -389,14 +439,13 @@ public abstract class HantoBaseGame implements HantoGame {
 	 *            The original position
 	 * @param to
 	 *            The destination position
+	 * 
+	 * 
 	 * @return A MoveResult if the rules of the specific Hanto game decides an
 	 *         outcome after general logic comes into play, null otherwise
-	 * @throws HantoException
-	 *             If the rules of the specific Hanto game are violated in some
-	 *             way
 	 */
 	protected MoveResult postRuleSetCheck(HantoPieceType pieceType,
-			HantoCoordinate from, HantoCoordinate to) throws HantoException {
+			HantoCoordinate from, HantoCoordinate to) {
 		return null;
 	}
 

@@ -10,7 +10,6 @@
 
 package hanto.jxhernandez;
 
-import common.*;
 import hanto.common.HantoGame;
 import hanto.common.HantoGameID;
 import hanto.common.HantoPlayerColor;

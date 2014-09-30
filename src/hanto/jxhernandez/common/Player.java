@@ -17,10 +17,17 @@ import hanto.common.HantoException;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 
+/**
+ * The player contains the inventory of pieces out of the board and the cooresponding color of the player
+ */
 public class Player {
 	private HantoPlayerColor color;
 	private List<HantoPieceType> reserves;
 	
+	/**
+	 * Constructor for Player.
+	 * @param color HantoPlayerColor
+	 */
 	public Player(HantoPlayerColor color) {
 		this.color = color;
 		reserves = new ArrayList<HantoPieceType>();
@@ -48,8 +55,8 @@ public class Player {
 	/**
 	 * Removes the piece from this player's reserve
 	 * @param piece The piece that is being used from the player's inventory
-	 * @throws HantoException If the piece is not in the player's reserve
-	 */
+	
+	 * @throws HantoException If the piece is not in the player's reserve */
 	public void removeFromReserve(HantoPieceType piece) throws HantoException {
 		if (reserves.contains(piece)) {
 			reserves.remove(piece);
