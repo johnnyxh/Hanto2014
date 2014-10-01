@@ -23,7 +23,7 @@ public class HantoFly implements HantoMoveValidator {
 	@Override
 	public boolean isMoveValid(HantoPosition orig, HantoPosition dest, Map<HantoPosition,Piece> board) {
 		boolean isValid = false;
-		List<HantoPosition> pieces = new ArrayList<HantoPosition>();;
+		List<HantoPosition> pieces = new ArrayList<HantoPosition>();
 		// Gather a list of friendly and enemy occupied positions on the board
 		for (Entry<HantoPosition, Piece> entry : board.entrySet()) {
 			if (!entry.getKey().equals(orig)) {
