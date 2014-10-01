@@ -77,7 +77,7 @@ public abstract class HantoBaseGame implements HantoGame {
 		}
 
 		if (orig != null
-				&& ((getPieceAt(orig).getColor() != getPlayerTurn()
+				&& (((getPieceAt(orig) == null) || getPieceAt(orig).getColor() != getPlayerTurn()
 						.getPlayerColor()) || (getPieceAt(orig).getType() != pieceType))) {
 			throw new HantoException(
 					"A piece of that type or your color was not found on that hex");

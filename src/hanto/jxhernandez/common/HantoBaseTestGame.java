@@ -26,6 +26,7 @@ import common.HantoTestGame.PieceLocationPair;
  */
 public abstract class HantoBaseTestGame implements HantoTestGame {
 
+	protected int setPlayerMoving = 0;
 	protected HantoBaseGame testGame;
 
 	@Override
@@ -78,13 +79,15 @@ public abstract class HantoBaseTestGame implements HantoTestGame {
 
 	@Override
 	public void setTurnNumber(int turnNumber) {
-		testGame.setNumTurns((turnNumber*2));
+		testGame.setNumTurns((turnNumber*2)+setPlayerMoving);
 	}
 
 	@Override
 	public void setPlayerMoving(HantoPlayerColor player) {
-		if (!(testGame.getPlayerTurn().getPlayerColor() == player)) {
-			testGame.setNumTurns(testGame.getNumTurns()-1);
+		if (testGame.getFirstPlayer().getPlayerColor() == player) {
+			setPlayerMoving = 0;
+		} else {
+			setPlayerMoving = 1;
 		}
 		
 	}

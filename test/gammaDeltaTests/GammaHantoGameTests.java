@@ -51,7 +51,8 @@ public class GammaHantoGameTests {
 		initialPieces[0] = (new PieceLocationPair(HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY, new HantoPosition(0,0)));
 		initialPieces[1] = (new PieceLocationPair(HantoPlayerColor.RED, HantoPieceType.BUTTERFLY, new HantoPosition(-1,0)));
 		testGame.initializeBoard(initialPieces);
-		testGame.setTurnNumber(2);
+		testGame.setPlayerMoving(HantoPlayerColor.BLUE);
+		testGame.setTurnNumber(1);
 		assertEquals(MoveResult.OK, testGame.makeMove(HantoPieceType.SPARROW, null, new HantoPosition(1,0)));
 	}
 	
@@ -62,7 +63,8 @@ public class GammaHantoGameTests {
 		initialPieces[0] = (new PieceLocationPair(HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY, new HantoPosition(0,0)));
 		initialPieces[1] = (new PieceLocationPair(HantoPlayerColor.RED, HantoPieceType.BUTTERFLY, new HantoPosition(-1,0)));
 		testGame.initializeBoard(initialPieces);
-		testGame.setTurnNumber(2);
+		testGame.setPlayerMoving(HantoPlayerColor.BLUE);
+		testGame.setTurnNumber(1);
 		assertEquals(MoveResult.OK, testGame.makeMove(HantoPieceType.SPARROW, null, new HantoPosition(-1,1)));
 	}
 	
@@ -73,7 +75,8 @@ public class GammaHantoGameTests {
 		initialPieces[0] = (new PieceLocationPair(HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY, new HantoPosition(0,0)));
 		initialPieces[1] = (new PieceLocationPair(HantoPlayerColor.RED, HantoPieceType.BUTTERFLY, new HantoPosition(-1,0)));
 		testGame.initializeBoard(initialPieces);
-		testGame.setTurnNumber(2);
+		testGame.setPlayerMoving(HantoPlayerColor.BLUE);
+		testGame.setTurnNumber(1);
 		assertEquals(MoveResult.OK, testGame.makeMove(HantoPieceType.SPARROW, null, new HantoPosition(-2,1)));
 	}
 	
@@ -85,7 +88,8 @@ public class GammaHantoGameTests {
 		initialPieces[1] = (new PieceLocationPair(HantoPlayerColor.RED, HantoPieceType.BUTTERFLY, new HantoPosition(-1,0)));
 		testGame.initializeBoard(initialPieces);
 		// Skipping turns, as long as nobody won
-		testGame.setTurnNumber(20);
+		testGame.setPlayerMoving(HantoPlayerColor.RED);
+		testGame.setTurnNumber(19);
 		assertEquals(MoveResult.DRAW, testGame.makeMove(HantoPieceType.SPARROW, null, new HantoPosition(-2,0)));
 	}
 	
@@ -100,8 +104,8 @@ public class GammaHantoGameTests {
 		initialPieces[4] = (new PieceLocationPair(HantoPlayerColor.BLUE, HantoPieceType.SPARROW, new HantoPosition(1,1)));
 		initialPieces[5] = (new PieceLocationPair(HantoPlayerColor.RED, HantoPieceType.SPARROW, new HantoPosition(-2,0)));
 		testGame.initializeBoard(initialPieces);
-		testGame.setTurnNumber(4);
 		testGame.setPlayerMoving(HantoPlayerColor.BLUE);
+		testGame.setTurnNumber(3);
 		assertEquals(MoveResult.OK, testGame.makeMove(HantoPieceType.SPARROW, new HantoPosition(1,1), new HantoPosition(1,0)));
 	}
 	
@@ -116,8 +120,8 @@ public class GammaHantoGameTests {
 		initialPieces[4] = (new PieceLocationPair(HantoPlayerColor.BLUE, HantoPieceType.SPARROW, new HantoPosition(1,1)));
 		initialPieces[5] = (new PieceLocationPair(HantoPlayerColor.RED, HantoPieceType.SPARROW, new HantoPosition(-2,0)));
 		testGame.initializeBoard(initialPieces);
-		testGame.setTurnNumber(4);
 		testGame.setPlayerMoving(HantoPlayerColor.BLUE);
+		testGame.setTurnNumber(3);
 		assertEquals(MoveResult.OK, testGame.makeMove(HantoPieceType.SPARROW, new HantoPosition(1,1), new HantoPosition(2,0)));
 	}
 	
@@ -132,8 +136,8 @@ public class GammaHantoGameTests {
 		initialPieces[4] = (new PieceLocationPair(HantoPlayerColor.BLUE, HantoPieceType.SPARROW, new HantoPosition(1,1)));
 		initialPieces[5] = (new PieceLocationPair(HantoPlayerColor.RED, HantoPieceType.SPARROW, new HantoPosition(-2,0)));
 		testGame.initializeBoard(initialPieces);
-		testGame.setTurnNumber(4);
 		testGame.setPlayerMoving(HantoPlayerColor.BLUE);
+		testGame.setTurnNumber(3);
 		assertEquals(MoveResult.OK, testGame.makeMove(HantoPieceType.SPARROW, new HantoPosition(1,1), new HantoPosition(1,-1)));
 	}
 	
@@ -148,8 +152,8 @@ public class GammaHantoGameTests {
 		initialPieces[4] = (new PieceLocationPair(HantoPlayerColor.BLUE, HantoPieceType.SPARROW, new HantoPosition(-1,2)));
 		initialPieces[5] = (new PieceLocationPair(HantoPlayerColor.RED, HantoPieceType.SPARROW, new HantoPosition(-2,0)));
 		testGame.initializeBoard(initialPieces);
-		testGame.setTurnNumber(4);
 		testGame.setPlayerMoving(HantoPlayerColor.BLUE);
+		testGame.setTurnNumber(3);
 		assertEquals(MoveResult.OK, testGame.makeMove(HantoPieceType.SPARROW, new HantoPosition(-1,2), new HantoPosition(-2,2)));
 	}
 	
@@ -164,8 +168,8 @@ public class GammaHantoGameTests {
 		initialPieces[4] = (new PieceLocationPair(HantoPlayerColor.BLUE, HantoPieceType.SPARROW, new HantoPosition(-1,2)));
 		initialPieces[5] = (new PieceLocationPair(HantoPlayerColor.RED, HantoPieceType.SPARROW, new HantoPosition(-2,0)));
 		testGame.initializeBoard(initialPieces);
-		testGame.setTurnNumber(4);
 		testGame.setPlayerMoving(HantoPlayerColor.BLUE);
+		testGame.setTurnNumber(3);
 		assertEquals(MoveResult.OK, testGame.makeMove(HantoPieceType.SPARROW, new HantoPosition(-1,2), new HantoPosition(-1,1)));
 	}
 	
@@ -180,8 +184,8 @@ public class GammaHantoGameTests {
 		initialPieces[4] = (new PieceLocationPair(HantoPlayerColor.BLUE, HantoPieceType.SPARROW, new HantoPosition(1,1)));
 		initialPieces[5] = (new PieceLocationPair(HantoPlayerColor.RED, HantoPieceType.SPARROW, new HantoPosition(-2,0)));
 		testGame.initializeBoard(initialPieces);
-		testGame.setTurnNumber(4);
 		testGame.setPlayerMoving(HantoPlayerColor.BLUE);
+		testGame.setTurnNumber(3);
 		assertEquals(MoveResult.OK, testGame.makeMove(HantoPieceType.SPARROW, new HantoPosition(0,1), new HantoPosition(0,2)));
 		System.out.println("Non-Contiguous Test: Move should be undone");
 		System.out.println(testGame.getPrintableBoard());
@@ -197,8 +201,8 @@ public class GammaHantoGameTests {
 		initialPieces[3] = (new PieceLocationPair(HantoPlayerColor.RED, HantoPieceType.SPARROW, new HantoPosition(-2,1)));
 		initialPieces[4] = (new PieceLocationPair(HantoPlayerColor.BLUE, HantoPieceType.SPARROW, new HantoPosition(1,1)));
 		initialPieces[5] = (new PieceLocationPair(HantoPlayerColor.RED, HantoPieceType.SPARROW, new HantoPosition(-2,0)));
-		testGame.initializeBoard(initialPieces);
-		testGame.setTurnNumber(4);
+		testGame.setPlayerMoving(HantoPlayerColor.BLUE);
+		testGame.setTurnNumber(3);
 		testGame.setPlayerMoving(HantoPlayerColor.BLUE);
 		try {
 			assertEquals(MoveResult.OK, testGame.makeMove(HantoPieceType.SPARROW, new HantoPosition(0,1), new HantoPosition(0,2)));

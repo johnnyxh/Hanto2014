@@ -38,7 +38,7 @@ public class GammaHantoGame extends HantoBaseGame {
 		secondPlayer.addToReserve(HantoPieceType.BUTTERFLY);
 		// Initialize piece move rules
 		HantoMoveRule sparrowRule = new HantoMoveRule(HantoPieceType.SPARROW, HantoMove.WALK, 1);
-		HantoMoveRule butterflyRule = new HantoMoveRule(HantoPieceType.SPARROW, HantoMove.WALK, 1);
+		HantoMoveRule butterflyRule = new HantoMoveRule(HantoPieceType.BUTTERFLY, HantoMove.WALK, 1);
 		pieceMoves.add(sparrowRule);
 		pieceMoves.add(butterflyRule);
 	}
