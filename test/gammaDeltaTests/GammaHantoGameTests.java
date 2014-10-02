@@ -89,7 +89,7 @@ public class GammaHantoGameTests {
 		testGame.initializeBoard(initialPieces);
 		// Skipping turns, as long as nobody won
 		testGame.setPlayerMoving(HantoPlayerColor.RED);
-		testGame.setTurnNumber(19);
+		testGame.setTurnNumber(20);
 		assertEquals(MoveResult.DRAW, testGame.makeMove(HantoPieceType.SPARROW, null, new HantoPosition(-2,0)));
 	}
 	

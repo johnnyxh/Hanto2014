@@ -44,12 +44,15 @@ public abstract class HantoBaseTestGame implements HantoTestGame {
 		} else {
 			bluePlayer = testGame.getSecondPlayer();
 			redPlayer = testGame.getFirstPlayer();
-			blueFirst = false; 
+			blueFirst = false;
 		}
-		
-		for (int i=0; i < initialPieces.length; i++) {
-			Piece newPiece = new Piece(initialPieces[i].pieceType, initialPieces[i].player);
-			HantoPosition newPosition = new HantoPosition(initialPieces[i].location.getX(), initialPieces[i].location.getY());
+
+		for (int i = 0; i < initialPieces.length; i++) {
+			Piece newPiece = new Piece(initialPieces[i].pieceType,
+					initialPieces[i].player);
+			HantoPosition newPosition = new HantoPosition(
+					initialPieces[i].location.getX(),
+					initialPieces[i].location.getY());
 			if (initialPieces[i].player == HantoPlayerColor.BLUE) {
 				try {
 					bluePlayer.removeFromReserve(initialPieces[i].pieceType);
@@ -66,7 +69,7 @@ public abstract class HantoBaseTestGame implements HantoTestGame {
 				}
 			}
 		}
-		
+
 		testGame.setBoard(board);
 		if (blueFirst) {
 			testGame.setFirstPlayer(bluePlayer);
@@ -79,7 +82,14 @@ public abstract class HantoBaseTestGame implements HantoTestGame {
 
 	@Override
 	public void setTurnNumber(int turnNumber) {
-		testGame.setNumTurns((turnNumber*2)+setPlayerMoving);
+		// Since I'm zero based and turn numbers are done by each player moving
+		// (0 for blue, 1 for red) I will need to multiply by 2 and subtract 2
+		// And add one if the set player to move is the second player
+		if (turnNumber == 1) {
+			testGame.setNumTurns(0 + setPlayerMoving);
+		} else {
+			testGame.setNumTurns(((turnNumber * 2) - 2) + setPlayerMoving);
+		}
 	}
 
 	@Override
@@ -89,7 +99,7 @@ public abstract class HantoBaseTestGame implements HantoTestGame {
 		} else {
 			setPlayerMoving = 1;
 		}
-		
+
 	}
 
 	@Override
