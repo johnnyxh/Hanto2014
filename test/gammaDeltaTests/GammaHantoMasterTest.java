@@ -231,7 +231,8 @@ public class GammaHantoMasterTest
 		assertEquals(BUTTERFLY, game.getPieceAt(makeCoordinate(0, 0)).getType());
 	}
 	
-	@Test(expected=Exception.class)
+	// I assume this shouldnt throw exception
+	@Test
 	public void blueResignsImmediately() throws HantoException
 	{
 		assertEquals(RED_WINS, game.makeMove(null, null, null));

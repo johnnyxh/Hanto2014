@@ -15,6 +15,7 @@ import hanto.jxhernandez.HantoGameFactory;
 import hanto.jxhernandez.alpha.AlphaHantoGame;
 import hanto.jxhernandez.beta.BetaHantoGame;
 import hanto.jxhernandez.delta.DeltaHantoTestGame;
+import hanto.jxhernandez.epsilon.EpsilonHantoTestGame;
 import hanto.jxhernandez.gamma.GammaHantoTestGame;
 
 /**
@@ -66,6 +67,9 @@ public class HantoTestGameFactory
 				break;
 			case DELTA_HANTO:
 				game = new DeltaHantoTestGame(movesFirst);
+				break;
+			case EPSILON_HANTO:
+				game = new EpsilonHantoTestGame(movesFirst);
 				break;
 		}
 		return game;
