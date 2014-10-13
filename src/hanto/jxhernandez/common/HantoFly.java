@@ -20,6 +20,16 @@ import java.util.Map.Entry;
  */
 public class HantoFly implements HantoMoveValidator {
 	
+	int numMoves;
+	
+	/**
+	 * Constructor for HantoFly.
+	 * @param numMoves int 0 for infinite spaces
+	 */
+	public HantoFly(int numMoves) {
+		this.numMoves = numMoves;
+	}
+	
 	@Override
 	public boolean isMoveValid(HantoPosition orig, HantoPosition dest, Map<HantoPosition,Piece> board) {
 		boolean isValid = false;
@@ -38,6 +48,10 @@ public class HantoFly implements HantoMoveValidator {
 			if (dest.isNextTo(pieces.get(i))) {
 				isValid = true;
 			}
+		}
+		// Check if within range
+		if (numMoves > 0) {
+			isValid = numMoves >= orig.distanceTo(dest);  
 		}
 		return isValid;
 	}

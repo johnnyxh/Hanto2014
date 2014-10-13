@@ -29,7 +29,7 @@ public class HantoMoveFactory {
 	 * @return HantoMoveValidator
 	 */
 	public HantoMoveValidator makeMoveValidator(HantoMove moveId) {
-		return makeMoveValidator(moveId, 1);
+		return makeMoveValidator(moveId, 0);
 	}
 	
 	/**
@@ -45,7 +45,10 @@ public class HantoMoveFactory {
 			moveValidator = new HantoWalk(num);
 			break;
 		case FLY:
-			moveValidator = new HantoFly();
+			moveValidator = new HantoFly(num);
+			break;
+		case JUMP:
+			moveValidator = new HantoJump(num);
 			break;
 		}
 		return moveValidator;
