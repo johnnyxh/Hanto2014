@@ -167,12 +167,12 @@ public class HantoPosition implements HantoCoordinate {
 			if (this.getY() > to.getY()) {
 				// Positive
 				for (int i = 1; i < distance; i++) {
-					hexes.add(new HantoPosition(this.getX(), this.getY() + i));
+					hexes.add(new HantoPosition(this.getX(), this.getY() - i));
 				}
 			} else {
 				// Negative
 				for (int i = 1; i < distance; i++) {
-					hexes.add(new HantoPosition(this.getX(), this.getY() - i));
+					hexes.add(new HantoPosition(this.getX(), this.getY() + i));
 				}
 			}
 		} else if (this.getY() == to.getY()) {
@@ -180,29 +180,29 @@ public class HantoPosition implements HantoCoordinate {
 			if (this.getX() > to.getX()) {
 				// Positive
 				for (int i = 1; i < distance; i++) {
-					hexes.add(new HantoPosition(this.getX() + i, this.getY()));
+					hexes.add(new HantoPosition(this.getX() - i, this.getY()));
 				}
 			} else {
 				// Negative
 				for (int i = 1; i < distance; i++) {
-					hexes.add(new HantoPosition(this.getX() - i, this.getY()));
+					hexes.add(new HantoPosition(this.getX() + i, this.getY()));
 				}
 			}
 		} else {
 			// Diagonal dropping
 			if ((this.getX() + distance) == to.getX()
-					&& (this.getY() + distance) == to.getY()) {
+					&& (this.getY() - distance) == to.getY()) {
 				// Positive
 				for (int i = 1; i < distance; i++) {
 					hexes.add(new HantoPosition(this.getX() + i, this.getY()
-							+ i));
+							- i));
 				}
 			} else if ((this.getX() - distance) == to.getX()
-					&& (this.getY() - distance) == to.getY()) {
+					&& (this.getY() + distance) == to.getY()) {
 				// Negative
 				for (int i = 1; i < distance; i++) {
 					hexes.add(new HantoPosition(this.getX() - i, this.getY()
-							- i));
+							+ i));
 				}
 			}
 		}
