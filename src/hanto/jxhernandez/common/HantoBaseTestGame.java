@@ -17,6 +17,7 @@ import hanto.common.HantoException;
 import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
+import hanto.common.HantoPrematureResignationException;
 import hanto.common.MoveResult;
 import common.HantoTestGame;
 import common.HantoTestGame.PieceLocationPair;
@@ -104,7 +105,7 @@ public abstract class HantoBaseTestGame implements HantoTestGame {
 
 	@Override
 	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from,
-			HantoCoordinate to) throws HantoException {
+			HantoCoordinate to) throws HantoException, HantoPrematureResignationException {
 		return testGame.makeMove(pieceType, from, to);
 	}
 

@@ -14,6 +14,7 @@ import hanto.common.HantoGame;
 import hanto.common.HantoGameID;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
+import hanto.common.HantoPrematureResignationException;
 import hanto.common.MoveResult;
 import hanto.jxhernandez.HantoGameFactory;
 import hanto.jxhernandez.common.HantoPosition;
@@ -23,7 +24,7 @@ import org.junit.Test;
 public class BetaHantoGameTest {
 
 	@Test
-	public void betaHantoGameFirstMoveGood() throws HantoException {
+	public void betaHantoGameFirstMoveGood() throws HantoException, HantoPrematureResignationException {
 		HantoGame betaGame = HantoGameFactory.getInstance().makeHantoGame(
 				HantoGameID.BETA_HANTO, HantoPlayerColor.BLUE);
 		HantoCoordinate firstMovePos = new HantoPosition(0, 0);
@@ -32,7 +33,7 @@ public class BetaHantoGameTest {
 	}
 
 	@Test(expected = HantoException.class)
-	public void betaHantoGameFirstMoveBad() throws HantoException {
+	public void betaHantoGameFirstMoveBad() throws HantoException, HantoPrematureResignationException {
 		HantoGame betaGame = HantoGameFactory.getInstance().makeHantoGame(
 				HantoGameID.BETA_HANTO, HantoPlayerColor.BLUE);
 		HantoCoordinate firstMovePos = new HantoPosition(0, 1);
@@ -41,7 +42,7 @@ public class BetaHantoGameTest {
 	}
 
 	@Test
-	public void betaHantoGameRedFirst() throws HantoException {
+	public void betaHantoGameRedFirst() throws HantoException, HantoPrematureResignationException {
 		HantoGame betaGame = HantoGameFactory.getInstance().makeHantoGame(
 				HantoGameID.BETA_HANTO, HantoPlayerColor.RED);
 		HantoCoordinate firstMovePos = new HantoPosition(0, 0);
@@ -51,7 +52,7 @@ public class BetaHantoGameTest {
 	}
 
 	@Test
-	public void betaHantoGameBlueFirst() throws HantoException {
+	public void betaHantoGameBlueFirst() throws HantoException, HantoPrematureResignationException {
 		HantoGame betaGame = HantoGameFactory.getInstance().makeHantoGame(
 				HantoGameID.BETA_HANTO, HantoPlayerColor.BLUE);
 		HantoCoordinate firstMovePos = new HantoPosition(0, 0);
@@ -63,7 +64,7 @@ public class BetaHantoGameTest {
 	// Checking to see that Blue and Red successfully alternate and that second
 	// player's move is valid
 	@Test
-	public void betaHantoGameSecondMoveGood() throws HantoException {
+	public void betaHantoGameSecondMoveGood() throws HantoException, HantoPrematureResignationException {
 		HantoGame betaGame = HantoGameFactory.getInstance().makeHantoGame(
 				HantoGameID.BETA_HANTO, HantoPlayerColor.BLUE);
 		HantoCoordinate firstMovePos = new HantoPosition(0, 0);
@@ -76,7 +77,7 @@ public class BetaHantoGameTest {
 	}
 	
 	@Test(expected=HantoException.class)
-	public void betaHantoGameSecondMoveBad() throws HantoException {
+	public void betaHantoGameSecondMoveBad() throws HantoException, HantoPrematureResignationException {
 		HantoGame betaGame = HantoGameFactory.getInstance().makeHantoGame(
 				HantoGameID.BETA_HANTO, HantoPlayerColor.BLUE);
 		HantoCoordinate firstMovePos = new HantoPosition(0, 0);
@@ -88,7 +89,7 @@ public class BetaHantoGameTest {
 	}
 	
 	@Test
-	public void betaHantoGameThirdMoveGood() throws HantoException {
+	public void betaHantoGameThirdMoveGood() throws HantoException, HantoPrematureResignationException {
 		HantoGame betaGame = HantoGameFactory.getInstance().makeHantoGame(
 				HantoGameID.BETA_HANTO, HantoPlayerColor.BLUE);
 		HantoCoordinate firstMovePos = new HantoPosition(0, 0);
@@ -104,7 +105,7 @@ public class BetaHantoGameTest {
 	}
 	
 	@Test
-	public void betaHantoGameThirdMoveStillGood() throws HantoException {
+	public void betaHantoGameThirdMoveStillGood() throws HantoException, HantoPrematureResignationException {
 		HantoGame betaGame = HantoGameFactory.getInstance().makeHantoGame(
 				HantoGameID.BETA_HANTO, HantoPlayerColor.BLUE);
 		HantoCoordinate firstMovePos = new HantoPosition(0, 0);
@@ -120,7 +121,7 @@ public class BetaHantoGameTest {
 	}
 	
 	@Test
-	public void betaHantoGameBlueWins() throws HantoException {
+	public void betaHantoGameBlueWins() throws HantoException, HantoPrematureResignationException {
 		HantoGame betaGame = HantoGameFactory.getInstance().makeHantoGame(
 				HantoGameID.BETA_HANTO, HantoPlayerColor.BLUE);
 		HantoCoordinate firstMovePos = new HantoPosition(0, 0);
@@ -148,7 +149,7 @@ public class BetaHantoGameTest {
 	}
 	
 	@Test
-	public void betaHantoGameRedWins() throws HantoException {
+	public void betaHantoGameRedWins() throws HantoException, HantoPrematureResignationException {
 		HantoGame betaGame = HantoGameFactory.getInstance().makeHantoGame(
 				HantoGameID.BETA_HANTO, HantoPlayerColor.BLUE);
 		HantoCoordinate firstMovePos = new HantoPosition(0, 0);
@@ -176,7 +177,7 @@ public class BetaHantoGameTest {
 	}
 	
 	@Test(expected=HantoException.class)
-	public void betaHantoGameQueenMustBePlacedBlue() throws HantoException {
+	public void betaHantoGameQueenMustBePlacedBlue() throws HantoException, HantoPrematureResignationException {
 		HantoGame betaGame = HantoGameFactory.getInstance().makeHantoGame(
 				HantoGameID.BETA_HANTO, HantoPlayerColor.BLUE);
 		HantoCoordinate firstMovePos = new HantoPosition(0, 0);
@@ -204,7 +205,7 @@ public class BetaHantoGameTest {
 	}
 	
 	@Test(expected=HantoException.class)
-	public void betaHantoGameQueenMustBePlacedRed() throws HantoException {
+	public void betaHantoGameQueenMustBePlacedRed() throws HantoException, HantoPrematureResignationException {
 		HantoGame betaGame = HantoGameFactory.getInstance().makeHantoGame(
 				HantoGameID.BETA_HANTO, HantoPlayerColor.BLUE);
 		HantoCoordinate firstMovePos = new HantoPosition(0, 0);
@@ -236,7 +237,7 @@ public class BetaHantoGameTest {
 	}
 	
 	@Test
-	public void betaHantoGameButterflyPlacedOn4thAndPrintBoard() throws HantoException {
+	public void betaHantoGameButterflyPlacedOn4thAndPrintBoard() throws HantoException, HantoPrematureResignationException {
 		HantoGame betaGame = HantoGameFactory.getInstance().makeHantoGame(
 				HantoGameID.BETA_HANTO, HantoPlayerColor.BLUE);
 		HantoCoordinate firstMovePos = new HantoPosition(0, 0);
@@ -270,7 +271,7 @@ public class BetaHantoGameTest {
 	}
 	
 	@Test
-	public void betaHantoGameRunningOutOfSparrowsBLUE() throws HantoException {
+	public void betaHantoGameRunningOutOfSparrowsBLUE() throws HantoException, HantoPrematureResignationException {
 		HantoGame betaGame = HantoGameFactory.getInstance().makeHantoGame(
 				HantoGameID.BETA_HANTO, HantoPlayerColor.BLUE);
 		HantoCoordinate firstMovePos = new HantoPosition(0, 0);
@@ -318,7 +319,7 @@ public class BetaHantoGameTest {
 	}
 	
 	@Test
-	public void betaHantoGameRunningOutOfSparrowsRED() throws HantoException {
+	public void betaHantoGameRunningOutOfSparrowsRED() throws HantoException, HantoPrematureResignationException {
 		HantoGame betaGame = HantoGameFactory.getInstance().makeHantoGame(
 				HantoGameID.BETA_HANTO, HantoPlayerColor.RED);
 		HantoCoordinate firstMovePos = new HantoPosition(0, 0);
@@ -366,7 +367,7 @@ public class BetaHantoGameTest {
 	}
 	
 	@Test(expected=HantoException.class)
-	public void betaHantoGamePlacingSecondButterfly() throws HantoException {
+	public void betaHantoGamePlacingSecondButterfly() throws HantoException, HantoPrematureResignationException {
 		HantoGame betaGame = HantoGameFactory.getInstance().makeHantoGame(
 				HantoGameID.BETA_HANTO, HantoPlayerColor.BLUE);
 		HantoCoordinate firstMovePos = new HantoPosition(0, 0);

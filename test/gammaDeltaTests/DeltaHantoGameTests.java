@@ -5,6 +5,7 @@ import hanto.common.HantoException;
 import hanto.common.HantoGameID;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
+import hanto.common.HantoPrematureResignationException;
 import hanto.common.MoveResult;
 import hanto.jxhernandez.common.HantoPosition;
 
@@ -16,20 +17,20 @@ import common.HantoTestGame.PieceLocationPair;
 
 public class DeltaHantoGameTests {
 
-	@Test
-	public void resignationAcceptRed() throws HantoException {
+	@Test(expected=HantoPrematureResignationException.class)
+	public void resignationAcceptRed() throws HantoException, HantoPrematureResignationException {
 		HantoTestGame testGame = HantoTestGameFactory.getInstance().makeHantoTestGame(HantoGameID.DELTA_HANTO, HantoPlayerColor.RED);
 		assertEquals(MoveResult.BLUE_WINS, testGame.makeMove(null, null, null));
 	}
 	
-	@Test
-	public void resignationAcceptBlue() throws HantoException {
+	@Test(expected=HantoPrematureResignationException.class)
+	public void resignationAcceptBlue() throws HantoException, HantoPrematureResignationException {
 		HantoTestGame testGame = HantoTestGameFactory.getInstance().makeHantoTestGame(HantoGameID.DELTA_HANTO, HantoPlayerColor.BLUE);
 		assertEquals(MoveResult.RED_WINS, testGame.makeMove(null, null, null));
 	}
 	
 	@Test
-	public void pieceSparrowFlyingGood() throws HantoException {
+	public void pieceSparrowFlyingGood() throws HantoException, HantoPrematureResignationException {
 		HantoTestGame testGame = HantoTestGameFactory.getInstance().makeHantoTestGame(HantoGameID.DELTA_HANTO, HantoPlayerColor.RED);
 		PieceLocationPair[] initialPieces = new PieceLocationPair[6];
 		initialPieces[0] = (new PieceLocationPair(HantoPlayerColor.RED, HantoPieceType.BUTTERFLY, new HantoPosition(0,0)));
@@ -45,7 +46,7 @@ public class DeltaHantoGameTests {
 	}
 	// I had never checked if an opponents piece was being moved before this
 	@Test(expected=HantoException.class)
-	public void pieceFlyingGoodButBadMovingOpponentPiece() throws HantoException {
+	public void pieceFlyingGoodButBadMovingOpponentPiece() throws HantoException, HantoPrematureResignationException {
 		HantoTestGame testGame = HantoTestGameFactory.getInstance().makeHantoTestGame(HantoGameID.DELTA_HANTO, HantoPlayerColor.BLUE);
 		PieceLocationPair[] initialPieces = new PieceLocationPair[6];
 		initialPieces[0] = (new PieceLocationPair(HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY, new HantoPosition(0,0)));
@@ -60,7 +61,7 @@ public class DeltaHantoGameTests {
 	}
 	
 	@Test(expected=HantoException.class)
-	public void pieceCrabFlying() throws HantoException {
+	public void pieceCrabFlying() throws HantoException, HantoPrematureResignationException {
 		HantoTestGame testGame = HantoTestGameFactory.getInstance().makeHantoTestGame(HantoGameID.DELTA_HANTO, HantoPlayerColor.RED);
 		PieceLocationPair[] initialPieces = new PieceLocationPair[6];
 		initialPieces[0] = (new PieceLocationPair(HantoPlayerColor.RED, HantoPieceType.BUTTERFLY, new HantoPosition(0,0)));
@@ -76,7 +77,7 @@ public class DeltaHantoGameTests {
 	}
 	// I also didn't check if the piece given in makeMove was the piece actually on that space
 	@Test(expected=HantoException.class)
-	public void attemptingToMoveDifferentPiece() throws HantoException {
+	public void attemptingToMoveDifferentPiece() throws HantoException, HantoPrematureResignationException {
 		HantoTestGame testGame = HantoTestGameFactory.getInstance().makeHantoTestGame(HantoGameID.DELTA_HANTO, HantoPlayerColor.RED);
 		PieceLocationPair[] initialPieces = new PieceLocationPair[6];
 		initialPieces[0] = (new PieceLocationPair(HantoPlayerColor.RED, HantoPieceType.BUTTERFLY, new HantoPosition(0,0)));
@@ -92,7 +93,7 @@ public class DeltaHantoGameTests {
 	}
 	
 	@Test(expected=HantoException.class)
-	public void movingAfterWinnerDeclared() throws HantoException {
+	public void movingAfterWinnerDeclared() throws HantoException, HantoPrematureResignationException {
 		HantoTestGame testGame = HantoTestGameFactory.getInstance().makeHantoTestGame(HantoGameID.DELTA_HANTO, HantoPlayerColor.RED);
 		PieceLocationPair[] initialPieces = new PieceLocationPair[6];
 		initialPieces[0] = (new PieceLocationPair(HantoPlayerColor.RED, HantoPieceType.BUTTERFLY, new HantoPosition(0,0)));
@@ -110,7 +111,7 @@ public class DeltaHantoGameTests {
 	}
 	
 	@Test
-	public void pieceSparrowFlyingGoodNextToEnemy() throws HantoException {
+	public void pieceSparrowFlyingGoodNextToEnemy() throws HantoException, HantoPrematureResignationException {
 		HantoTestGame testGame = HantoTestGameFactory.getInstance().makeHantoTestGame(HantoGameID.DELTA_HANTO, HantoPlayerColor.RED);
 		PieceLocationPair[] initialPieces = new PieceLocationPair[6];
 		initialPieces[0] = (new PieceLocationPair(HantoPlayerColor.RED, HantoPieceType.BUTTERFLY, new HantoPosition(0,0)));
@@ -126,7 +127,7 @@ public class DeltaHantoGameTests {
 	}
 	
 	@Test(expected=HantoException.class)
-	public void pieceSparrowFlyingBadNotContiguous() throws HantoException {
+	public void pieceSparrowFlyingBadNotContiguous() throws HantoException, HantoPrematureResignationException {
 		HantoTestGame testGame = HantoTestGameFactory.getInstance().makeHantoTestGame(HantoGameID.DELTA_HANTO, HantoPlayerColor.RED);
 		PieceLocationPair[] initialPieces = new PieceLocationPair[6];
 		initialPieces[0] = (new PieceLocationPair(HantoPlayerColor.RED, HantoPieceType.BUTTERFLY, new HantoPosition(0,0)));

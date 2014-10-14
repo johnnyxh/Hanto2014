@@ -12,7 +12,9 @@ package gammaDeltaTests;
 
 import static org.junit.Assert.*;
 import hanto.common.*;
+
 import org.junit.*;
+
 import common.*;
 import static hanto.common.HantoPieceType.*;
 import static hanto.common.MoveResult.*;
@@ -77,7 +79,7 @@ public class GammaHantoPolliceTest
 	}
 	
 	@Test
-	public void bluePlacesButterflyFirst() throws HantoException
+	public void bluePlacesButterflyFirst() throws HantoException, HantoPrematureResignationException
 	{
 		final MoveResult mr = game.makeMove(BUTTERFLY, null, makeCoordinate(0, 0));
 		assertEquals(OK, mr);
@@ -87,14 +89,14 @@ public class GammaHantoPolliceTest
 	}
 	
 	@Test
-	public void redPlacesSparrowFirst() throws HantoException
+	public void redPlacesSparrowFirst() throws HantoException, HantoPrematureResignationException
 	{
 		final MoveResult mr = game.makeMove(SPARROW, null, makeCoordinate(0, 0));
 		assertEquals(OK, mr);
 	}
 	
 	@Test
-	public void blueMovesSparrow() throws HantoException
+	public void blueMovesSparrow() throws HantoException, HantoPrematureResignationException
 	{
 		game.makeMove(BUTTERFLY, null, makeCoordinate(0, 0));
 		game.makeMove(BUTTERFLY, null, makeCoordinate(0, 1));
@@ -108,7 +110,7 @@ public class GammaHantoPolliceTest
 	}
 	
 	@Test
-	public void blueMovesSparrowUsingTestGame() throws HantoException
+	public void blueMovesSparrowUsingTestGame() throws HantoException, HantoPrematureResignationException
 	{
 		final PieceLocationPair[] board = new PieceLocationPair[] {
 		    plPair(BLUE, BUTTERFLY, 0, 0), plPair(RED, BUTTERFLY, 0, 1),
@@ -126,7 +128,7 @@ public class GammaHantoPolliceTest
 	}
 	
 	@Test
-	public void gameEndsInDrawAfter20Moves() throws HantoException
+	public void gameEndsInDrawAfter20Moves() throws HantoException, HantoPrematureResignationException
 	{
 		final PieceLocationPair[] board = new PieceLocationPair[] {
 			    plPair(BLUE, BUTTERFLY, 0, 0), plPair(RED, BUTTERFLY, 0, 1),
@@ -140,7 +142,7 @@ public class GammaHantoPolliceTest
 	}
 	
 	@Test
-	public void moveButterfly() throws HantoException
+	public void moveButterfly() throws HantoException, HantoPrematureResignationException
 	{
 		game.makeMove(BUTTERFLY, null, makeCoordinate(0, 0));
 		game.makeMove(BUTTERFLY, null, makeCoordinate(0, 1));
@@ -152,7 +154,7 @@ public class GammaHantoPolliceTest
 	}
 	
 	@Test(expected=HantoException.class)
-	public void moveToDisconnectConfiguration() throws HantoException
+	public void moveToDisconnectConfiguration() throws HantoException, HantoPrematureResignationException
 	{
 		game.makeMove(BUTTERFLY, null, makeCoordinate(0, 0));
 		game.makeMove(BUTTERFLY, null, makeCoordinate(0, 1));
@@ -160,7 +162,7 @@ public class GammaHantoPolliceTest
 	}
 	
 	@Test(expected=HantoException.class)
-	public void attemptToMoveAPieceFromAnEmptyHex() throws HantoException
+	public void attemptToMoveAPieceFromAnEmptyHex() throws HantoException, HantoPrematureResignationException
 	{
 		game.makeMove(BUTTERFLY, null, makeCoordinate(0, 0));
 		game.makeMove(BUTTERFLY, null, makeCoordinate(0, 1));
@@ -168,7 +170,7 @@ public class GammaHantoPolliceTest
 	}
 	
 	@Test(expected=HantoException.class)
-	public void attemptToMoveWrongPiece() throws HantoException
+	public void attemptToMoveWrongPiece() throws HantoException, HantoPrematureResignationException
 	{
 		game.makeMove(BUTTERFLY, null, makeCoordinate(0, 0));
 		game.makeMove(BUTTERFLY, null, makeCoordinate(0, 1));

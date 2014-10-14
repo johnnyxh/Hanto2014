@@ -1,11 +1,11 @@
 package gammaDeltaTests;
 
 import static org.junit.Assert.*;
-
 import hanto.common.HantoException;
 import hanto.common.HantoGameID;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
+import hanto.common.HantoPrematureResignationException;
 import hanto.common.MoveResult;
 import hanto.jxhernandez.common.HantoPosition;
 
@@ -19,33 +19,33 @@ public class GammaHantoGameTests {
 	
 	
 	@Test
-	public void firstTurnPlacement() throws HantoException {
+	public void firstTurnPlacement() throws HantoException, HantoPrematureResignationException {
 		HantoTestGame testGame = HantoTestGameFactory.getInstance().makeHantoTestGame(HantoGameID.GAMMA_HANTO, HantoPlayerColor.BLUE);
 		assertEquals(MoveResult.OK, testGame.makeMove(HantoPieceType.SPARROW, null, new HantoPosition(0,0)));
 	}
 	
 	@Test(expected=HantoException.class)
-	public void firstTurnPlacementBad() throws HantoException {
+	public void firstTurnPlacementBad() throws HantoException, HantoPrematureResignationException {
 		HantoTestGame testGame = HantoTestGameFactory.getInstance().makeHantoTestGame(HantoGameID.GAMMA_HANTO, HantoPlayerColor.BLUE);
 		assertEquals(MoveResult.OK, testGame.makeMove(HantoPieceType.SPARROW, null, new HantoPosition(0,1)));
 	}
 	
 	@Test
-	public void secondTurnPlacement() throws HantoException {
+	public void secondTurnPlacement() throws HantoException, HantoPrematureResignationException {
 		HantoTestGame testGame = HantoTestGameFactory.getInstance().makeHantoTestGame(HantoGameID.GAMMA_HANTO, HantoPlayerColor.BLUE);
 		testGame.makeMove(HantoPieceType.SPARROW, null, new HantoPosition(0,0));
 		assertEquals(MoveResult.OK, testGame.makeMove(HantoPieceType.SPARROW, null, new HantoPosition(1,0)));
 	}
 	
 	@Test(expected=HantoException.class)
-	public void secondTurnPlacementBad() throws HantoException {
+	public void secondTurnPlacementBad() throws HantoException, HantoPrematureResignationException {
 		HantoTestGame testGame = HantoTestGameFactory.getInstance().makeHantoTestGame(HantoGameID.GAMMA_HANTO, HantoPlayerColor.BLUE);
 		testGame.makeMove(HantoPieceType.SPARROW, null, new HantoPosition(0,0));
 		assertEquals(MoveResult.OK, testGame.makeMove(HantoPieceType.SPARROW, null, new HantoPosition(2,0)));
 	}
 
 	@Test
-	public void placingPieceNextToFriendly() throws HantoException {
+	public void placingPieceNextToFriendly() throws HantoException, HantoPrematureResignationException {
 		HantoTestGame testGame = HantoTestGameFactory.getInstance().makeHantoTestGame(HantoGameID.GAMMA_HANTO, HantoPlayerColor.BLUE);
 		PieceLocationPair[] initialPieces = new PieceLocationPair[2];
 		initialPieces[0] = (new PieceLocationPair(HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY, new HantoPosition(0,0)));
@@ -57,7 +57,7 @@ public class GammaHantoGameTests {
 	}
 	
 	@Test(expected=HantoException.class)
-	public void placingPieceNextToFriendlyAndEnemy() throws HantoException {
+	public void placingPieceNextToFriendlyAndEnemy() throws HantoException, HantoPrematureResignationException {
 		HantoTestGame testGame = HantoTestGameFactory.getInstance().makeHantoTestGame(HantoGameID.GAMMA_HANTO, HantoPlayerColor.BLUE);
 		PieceLocationPair[] initialPieces = new PieceLocationPair[2];
 		initialPieces[0] = (new PieceLocationPair(HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY, new HantoPosition(0,0)));
@@ -69,7 +69,7 @@ public class GammaHantoGameTests {
 	}
 	
 	@Test(expected=HantoException.class)
-	public void placingPieceNextToEnemy() throws HantoException {
+	public void placingPieceNextToEnemy() throws HantoException, HantoPrematureResignationException {
 		HantoTestGame testGame = HantoTestGameFactory.getInstance().makeHantoTestGame(HantoGameID.GAMMA_HANTO, HantoPlayerColor.BLUE);
 		PieceLocationPair[] initialPieces = new PieceLocationPair[2];
 		initialPieces[0] = (new PieceLocationPair(HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY, new HantoPosition(0,0)));
@@ -81,7 +81,7 @@ public class GammaHantoGameTests {
 	}
 	
 	@Test
-	public void drawAtTwentyTurns() throws HantoException {
+	public void drawAtTwentyTurns() throws HantoException, HantoPrematureResignationException {
 		HantoTestGame testGame = HantoTestGameFactory.getInstance().makeHantoTestGame(HantoGameID.GAMMA_HANTO, HantoPlayerColor.BLUE);
 		PieceLocationPair[] initialPieces = new PieceLocationPair[2];
 		initialPieces[0] = (new PieceLocationPair(HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY, new HantoPosition(0,0)));
@@ -94,7 +94,7 @@ public class GammaHantoGameTests {
 	}
 	
 	@Test
-	public void pieceWalkingGood() throws HantoException {
+	public void pieceWalkingGood() throws HantoException, HantoPrematureResignationException {
 		HantoTestGame testGame = HantoTestGameFactory.getInstance().makeHantoTestGame(HantoGameID.GAMMA_HANTO, HantoPlayerColor.BLUE);
 		PieceLocationPair[] initialPieces = new PieceLocationPair[6];
 		initialPieces[0] = (new PieceLocationPair(HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY, new HantoPosition(0,0)));
@@ -110,7 +110,7 @@ public class GammaHantoGameTests {
 	}
 	
 	@Test(expected=HantoException.class)
-	public void pieceWalkingBadMoreThanOneHexNoAdjacents() throws HantoException {
+	public void pieceWalkingBadMoreThanOneHexNoAdjacents() throws HantoException, HantoPrematureResignationException {
 		HantoTestGame testGame = HantoTestGameFactory.getInstance().makeHantoTestGame(HantoGameID.GAMMA_HANTO, HantoPlayerColor.BLUE);
 		PieceLocationPair[] initialPieces = new PieceLocationPair[6];
 		initialPieces[0] = (new PieceLocationPair(HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY, new HantoPosition(0,0)));
@@ -126,7 +126,7 @@ public class GammaHantoGameTests {
 	}
 	
 	@Test(expected=HantoException.class)
-	public void pieceWalkingBadMoreThanOneHexFriendlyAdjacent() throws HantoException {
+	public void pieceWalkingBadMoreThanOneHexFriendlyAdjacent() throws HantoException, HantoPrematureResignationException {
 		HantoTestGame testGame = HantoTestGameFactory.getInstance().makeHantoTestGame(HantoGameID.GAMMA_HANTO, HantoPlayerColor.BLUE);
 		PieceLocationPair[] initialPieces = new PieceLocationPair[6];
 		initialPieces[0] = (new PieceLocationPair(HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY, new HantoPosition(0,0)));
@@ -142,7 +142,7 @@ public class GammaHantoGameTests {
 	}
 	
 	@Test
-	public void pieceWalkingGoodMoveOneAdjacentEnemy() throws HantoException {
+	public void pieceWalkingGoodMoveOneAdjacentEnemy() throws HantoException, HantoPrematureResignationException {
 		HantoTestGame testGame = HantoTestGameFactory.getInstance().makeHantoTestGame(HantoGameID.GAMMA_HANTO, HantoPlayerColor.BLUE);
 		PieceLocationPair[] initialPieces = new PieceLocationPair[6];
 		initialPieces[0] = (new PieceLocationPair(HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY, new HantoPosition(0,0)));
@@ -158,7 +158,7 @@ public class GammaHantoGameTests {
 	}
 	
 	@Test
-	public void pieceWalkingGoodMoveOneAdjacentEnemyAndFriendly() throws HantoException {
+	public void pieceWalkingGoodMoveOneAdjacentEnemyAndFriendly() throws HantoException, HantoPrematureResignationException {
 		HantoTestGame testGame = HantoTestGameFactory.getInstance().makeHantoTestGame(HantoGameID.GAMMA_HANTO, HantoPlayerColor.BLUE);
 		PieceLocationPair[] initialPieces = new PieceLocationPair[6];
 		initialPieces[0] = (new PieceLocationPair(HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY, new HantoPosition(0,0)));
@@ -174,7 +174,7 @@ public class GammaHantoGameTests {
 	}
 	
 	@Test(expected=HantoException.class)
-	public void pieceWalkingNonContiguousResult() throws HantoException {
+	public void pieceWalkingNonContiguousResult() throws HantoException, HantoPrematureResignationException {
 		HantoTestGame testGame = HantoTestGameFactory.getInstance().makeHantoTestGame(HantoGameID.GAMMA_HANTO, HantoPlayerColor.BLUE);
 		PieceLocationPair[] initialPieces = new PieceLocationPair[6];
 		initialPieces[0] = (new PieceLocationPair(HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY, new HantoPosition(0,0)));
@@ -192,7 +192,7 @@ public class GammaHantoGameTests {
 	}
 	
 	@Test
-	public void pieceWalkingNonContiguousResultPrintOut() throws HantoException {
+	public void pieceWalkingNonContiguousResultPrintOut() throws HantoException, HantoPrematureResignationException {
 		HantoTestGame testGame = HantoTestGameFactory.getInstance().makeHantoTestGame(HantoGameID.GAMMA_HANTO, HantoPlayerColor.BLUE);
 		PieceLocationPair[] initialPieces = new PieceLocationPair[6];
 		initialPieces[0] = (new PieceLocationPair(HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY, new HantoPosition(0,0)));

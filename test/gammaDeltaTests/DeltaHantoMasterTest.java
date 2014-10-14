@@ -16,7 +16,9 @@ import static hanto.common.MoveResult.*;
 import static org.junit.Assert.*;
 import hanto.common.*;
 import hanto.jxhernandez.HantoGameFactory;
+
 import org.junit.*;
+
 import common.*;
 import common.HantoTestGame.PieceLocationPair;
 
@@ -78,7 +80,7 @@ public class DeltaHantoMasterTest
 	}
 	
 	@Test
-	public void bluePlacesButterflyFirst() throws HantoException
+	public void bluePlacesButterflyFirst() throws HantoException, HantoPrematureResignationException
 	{
 		final MoveResult mr = game.makeMove(BUTTERFLY, null, makeCoordinate(0, 0));
 		assertEquals(OK, mr);
@@ -87,8 +89,8 @@ public class DeltaHantoMasterTest
 		assertEquals(BUTTERFLY, piece.getType());
 	}
 	
-	@Test
-	public void blueResignsImmediately() throws HantoException
+	@Test(expected=HantoPrematureResignationException.class)
+	public void blueResignsImmediately() throws HantoException, HantoPrematureResignationException
 	{
 		// use the factory for coverage
 		game = HantoGameFactory.getInstance().makeHantoGame(HantoGameID.DELTA_HANTO);
@@ -96,7 +98,7 @@ public class DeltaHantoMasterTest
 	}
 	
 	@Test(expected=HantoException.class)
-	public void attemptToMoveAfterGameIsOver() throws HantoException
+	public void attemptToMoveAfterGameIsOver() throws HantoException, HantoPrematureResignationException
 	{
 		final PieceLocationPair[] board = new PieceLocationPair[] {
 			    plPair(BLUE, BUTTERFLY, 0, 0), plPair(RED, BUTTERFLY, 0, 1),
@@ -112,7 +114,7 @@ public class DeltaHantoMasterTest
 	}
 	
 	@Test
-	public void placeACrab() throws HantoException
+	public void placeACrab() throws HantoException, HantoPrematureResignationException
 	{
 		assertEquals(OK, game.makeMove(CRAB, null, makeCoordinate(0, 0)));
 		final HantoPiece hp = game.getPieceAt(makeCoordinate(0, 0));
@@ -121,7 +123,7 @@ public class DeltaHantoMasterTest
 	}
 	
 	@Test
-	public void sparrowFliesMoreThanOneSpace() throws HantoException
+	public void sparrowFliesMoreThanOneSpace() throws HantoException, HantoPrematureResignationException
 	{
 		final PieceLocationPair[] board = new PieceLocationPair[] {
 			    plPair(BLUE, BUTTERFLY, 0, 0), plPair(RED, BUTTERFLY, 0, 1),
@@ -138,7 +140,7 @@ public class DeltaHantoMasterTest
 	}
 	
 	@Test(expected=HantoException.class)
-	public void sparrowFliesToInvalidLocation() throws HantoException
+	public void sparrowFliesToInvalidLocation() throws HantoException, HantoPrematureResignationException
 	{
 		final PieceLocationPair[] board = new PieceLocationPair[] {
 			    plPair(BLUE, BUTTERFLY, 0, 0), plPair(RED, BUTTERFLY, 0, 1),
@@ -150,7 +152,7 @@ public class DeltaHantoMasterTest
 	}
 	
 	@Test(expected=HantoException.class)
-	public void crabWalksAndCreatesDisconnectedConfiguration() throws HantoException
+	public void crabWalksAndCreatesDisconnectedConfiguration() throws HantoException, HantoPrematureResignationException
 	{
 		final PieceLocationPair[] board = new PieceLocationPair[] {
 			    plPair(BLUE, BUTTERFLY, 0, 0), plPair(RED, BUTTERFLY, 0, 1),
@@ -165,13 +167,13 @@ public class DeltaHantoMasterTest
 	}
 	
 	@Test(expected=HantoException.class)
-	public void attemptToUsePieceNotInGame() throws HantoException
+	public void attemptToUsePieceNotInGame() throws HantoException, HantoPrematureResignationException
 	{
 		game.makeMove(CRANE, null, makeCoordinate(0, 0));
 	}
 	
 	@Test
-	public void moveByFlying() throws HantoException
+	public void moveByFlying() throws HantoException, HantoPrematureResignationException
 	{
 
 		final PieceLocationPair[] board = new PieceLocationPair[] {

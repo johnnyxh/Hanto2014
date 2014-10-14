@@ -15,6 +15,7 @@ import hanto.common.HantoGameID;
 import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
+import hanto.common.HantoPrematureResignationException;
 import hanto.common.MoveResult;
 import hanto.jxhernandez.HantoGameFactory;
 import hanto.jxhernandez.common.HantoPosition;
@@ -31,9 +32,10 @@ public class AlphaHantoGameTest {
 	/**
 	 * First move test
 	 * @throws HantoException
+	 * @throws HantoPrematureResignationException 
 	 */
 	@Test
-	public void alphaHantoGameGoodFirstMove() throws HantoException {
+	public void alphaHantoGameGoodFirstMove() throws HantoException, HantoPrematureResignationException {
 		HantoGame alphaGame = HantoGameFactory.getInstance().makeHantoGame(
 				HantoGameID.ALPHA_HANTO);
 		HantoCoordinate firstMovePos = new HantoPosition(0, 0);
@@ -44,9 +46,10 @@ public class AlphaHantoGameTest {
 	/**
 	 * Bad first move test
 	 * @throws HantoException
+	 * @throws HantoPrematureResignationException 
 	 */
 	@Test(expected = HantoException.class)
-	public void alphaHantoGameBadFirstMove() throws HantoException {
+	public void alphaHantoGameBadFirstMove() throws HantoException, HantoPrematureResignationException {
 		HantoGame alphaGame = HantoGameFactory.getInstance().makeHantoGame(
 				HantoGameID.ALPHA_HANTO);
 		HantoCoordinate firstMovePos = new HantoPosition(1, 0);
@@ -57,9 +60,10 @@ public class AlphaHantoGameTest {
 	/**
 	 * Get piece test
 	 * @throws HantoException
+	 * @throws HantoPrematureResignationException 
 	 */
 	@Test
-	public void alphaHantoGetPieceAfterFirstMove() throws HantoException {
+	public void alphaHantoGetPieceAfterFirstMove() throws HantoException, HantoPrematureResignationException {
 		HantoGame alphaGame = HantoGameFactory.getInstance().makeHantoGame(
 				HantoGameID.ALPHA_HANTO);
 		HantoCoordinate firstMovePos = new HantoPosition(0, 0);
@@ -72,9 +76,10 @@ public class AlphaHantoGameTest {
 	/**
 	 * Not butterfly test
 	 * @throws HantoException
+	 * @throws HantoPrematureResignationException 
 	 */
 	@Test(expected = HantoException.class)
-	public void alphaHantoGameNotButterfly() throws HantoException {
+	public void alphaHantoGameNotButterfly() throws HantoException, HantoPrematureResignationException {
 		HantoGame alphaGame = HantoGameFactory.getInstance().makeHantoGame(
 				HantoGameID.ALPHA_HANTO);
 		HantoCoordinate firstMovePos = new HantoPosition(0, 0);
@@ -84,9 +89,10 @@ public class AlphaHantoGameTest {
 	/**
 	 * Good second move test
 	 * @throws HantoException
+	 * @throws HantoPrematureResignationException 
 	 */
 	@Test
-	public void alphaHantoGameGoodSecondMove() throws HantoException {
+	public void alphaHantoGameGoodSecondMove() throws HantoException, HantoPrematureResignationException {
 		HantoGame alphaGame = HantoGameFactory.getInstance().makeHantoGame(
 				HantoGameID.ALPHA_HANTO);
 		HantoCoordinate firstMovePos = new HantoPosition(0, 0);
@@ -99,9 +105,10 @@ public class AlphaHantoGameTest {
 	/**
 	 * Bad second move test
 	 * @throws HantoException
+	 * @throws HantoPrematureResignationException 
 	 */
 	@Test(expected = HantoException.class)
-	public void alphaHantoGameBadSecondMove() throws HantoException {
+	public void alphaHantoGameBadSecondMove() throws HantoException, HantoPrematureResignationException {
 		HantoGame alphaGame = HantoGameFactory.getInstance().makeHantoGame(
 				HantoGameID.ALPHA_HANTO);
 		HantoCoordinate firstMovePos = new HantoPosition(0, 0);
@@ -113,9 +120,10 @@ public class AlphaHantoGameTest {
 	/**
 	 * Can't move existing piece
 	 * @throws HantoException
+	 * @throws HantoPrematureResignationException 
 	 */
 	@Test(expected = HantoException.class)
-	public void alphaHantoGameMoveExisting() throws HantoException {
+	public void alphaHantoGameMoveExisting() throws HantoException, HantoPrematureResignationException {
 		HantoGame alphaGame = HantoGameFactory.getInstance().makeHantoGame(
 				HantoGameID.ALPHA_HANTO);
 		HantoCoordinate firstMovePos = new HantoPosition(0, 0);
@@ -126,9 +134,10 @@ public class AlphaHantoGameTest {
 	/**
 	 * Printable board test
 	 * @throws HantoException
+	 * @throws HantoPrematureResignationException 
 	 */
 	@Test
-	public void alphaHantoGamePrintableBoard() throws HantoException {
+	public void alphaHantoGamePrintableBoard() throws HantoException, HantoPrematureResignationException {
 		HantoGame alphaGame = HantoGameFactory.getInstance().makeHantoGame(
 				HantoGameID.ALPHA_HANTO);
 		HantoCoordinate firstMovePos = new HantoPosition(0, 0);

@@ -14,6 +14,7 @@ import hanto.common.HantoGame;
 import hanto.common.HantoGameID;
 import hanto.common.HantoPiece;
 import hanto.common.HantoPlayerColor;
+import hanto.common.HantoPrematureResignationException;
 import static hanto.common.HantoPieceType.*;
 import static hanto.common.HantoPlayerColor.*;
 import hanto.common.MoveResult;
@@ -113,7 +114,7 @@ public class PolliceAlphaHantoTests
 	}
 
 	@Test
-	public void blueMakesValidFirstMove() throws HantoException
+	public void blueMakesValidFirstMove() throws HantoException, HantoPrematureResignationException
 
 	{
 
@@ -125,7 +126,7 @@ public class PolliceAlphaHantoTests
 	}
 
 	@Test
-	public void afterFirstMoveBlueButterflyIsAt0_0() throws HantoException
+	public void afterFirstMoveBlueButterflyIsAt0_0() throws HantoException, HantoPrematureResignationException
 
 	{
 
@@ -140,7 +141,7 @@ public class PolliceAlphaHantoTests
 	}
 
 	@Test(expected = HantoException.class)
-	public void bluePlacesNonButterfly() throws HantoException
+	public void bluePlacesNonButterfly() throws HantoException, HantoPrematureResignationException
 
 	{
 
@@ -149,7 +150,7 @@ public class PolliceAlphaHantoTests
 	}
 
 	@Test
-	public void redPlacesButterflyNextToBlueButterfly() throws HantoException
+	public void redPlacesButterflyNextToBlueButterfly() throws HantoException, HantoPrematureResignationException
 
 	{
 
@@ -167,7 +168,7 @@ public class PolliceAlphaHantoTests
 
 	@Test(expected = HantoException.class)
 	public void blueAttemptsToPlaceButterflyAtWrongLocation()
-			throws HantoException
+			throws HantoException, HantoPrematureResignationException
 
 	{
 
@@ -176,7 +177,7 @@ public class PolliceAlphaHantoTests
 	}
 
 	@Test
-	public void redMakesValidSecondMoveAndGameIsDrawn() throws HantoException
+	public void redMakesValidSecondMoveAndGameIsDrawn() throws HantoException, HantoPrematureResignationException
 
 	{
 
@@ -191,7 +192,7 @@ public class PolliceAlphaHantoTests
 
 	@Test(expected = HantoException.class)
 	public void redPlacesButterflyNonAdjacentToBlueButterfly()
-			throws HantoException
+			throws HantoException, HantoPrematureResignationException
 
 	{
 
@@ -202,7 +203,7 @@ public class PolliceAlphaHantoTests
 	}
 
 	@Test(expected = HantoException.class)
-	public void attemptToMoveRatherThanPlace() throws HantoException
+	public void attemptToMoveRatherThanPlace() throws HantoException, HantoPrematureResignationException
 
 	{
 

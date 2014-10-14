@@ -22,6 +22,7 @@ import hanto.common.HantoGame;
 import hanto.common.HantoPiece;
 import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
+import hanto.common.HantoPrematureResignationException;
 import hanto.common.MoveResult;
 
 /**
@@ -63,7 +64,7 @@ public abstract class HantoBaseGame implements HantoGame {
 
 	@Override
 	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from,
-			HantoCoordinate to) throws HantoException {
+			HantoCoordinate to) throws HantoException, HantoPrematureResignationException {
 
 		HantoPosition orig = HantoPosition.coordinateToPosition(from);
 		HantoPosition dest = HantoPosition.coordinateToPosition(to);
@@ -85,12 +86,14 @@ public abstract class HantoBaseGame implements HantoGame {
 
 		// Resignation check
 		if (pieceType == null && from == null && to == null) {
-			if (getPlayerTurn().getPlayerColor() == HantoPlayerColor.RED) {
+			if (getPlayerTurn().getPlayerColor() == HantoPlayerColor.RED && !PossibleMoves.movesLeft(board, getPlayerTurn(), numTurns, pieceMoves)) {
 				winner = MoveResult.BLUE_WINS;
 				return MoveResult.BLUE_WINS;
-			} else {
+			} else if (!PossibleMoves.movesLeft(board, getPlayerTurn(), numTurns, pieceMoves)){
 				winner = MoveResult.RED_WINS;
 				return MoveResult.RED_WINS;
+			} else {
+				throw new HantoPrematureResignationException();
 			}
 		}
 
