@@ -12,6 +12,7 @@ package hanto.jxhernandez.common;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import hanto.common.HantoException;
 import hanto.common.HantoPieceType;
@@ -86,6 +87,15 @@ public class Player {
 	 */
 	public HantoPlayerColor getPlayerColor() {
 		return color;
+	}
+	
+	/**
+	 * Reach in and grab any random piece from the inventory
+	 * @return A random HantoPieceType within reserves
+	 */
+	public HantoPieceType reachAndGrab() {
+		int index = new Random().nextInt(reserves.size());
+		return reserves.get(index);
 	}
 
 }
