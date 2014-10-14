@@ -66,6 +66,13 @@ public class Player {
 	}
 	
 	/**
+	 * Removes all the pieces in the reserves
+	 */
+	public void removeAllReserve() {
+		reserves.clear();
+	}
+	
+	/**
 	 * Get the number of remaining pieces
 	 * @return int of remaining pieces
 	 */

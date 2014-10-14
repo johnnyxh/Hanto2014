@@ -7,6 +7,7 @@ import hanto.common.HantoPieceType;
 import hanto.common.HantoPlayerColor;
 import hanto.common.HantoPrematureResignationException;
 import hanto.common.MoveResult;
+import hanto.jxhernandez.common.HantoBaseTestGame;
 import hanto.jxhernandez.common.HantoPosition;
 
 import org.junit.Test;
@@ -227,6 +228,21 @@ public class EpsilonHantoTests {
 		testGame.setPlayerMoving(HantoPlayerColor.RED);
 		testGame.setTurnNumber(13);
 		assertEquals(MoveResult.OK, testGame.makeMove(null, null, null));
+	}
+	
+	@Test
+	public void properResignation() throws HantoException, HantoPrematureResignationException {
+		HantoTestGame testGame = HantoTestGameFactory.getInstance().makeHantoTestGame(HantoGameID.EPSILON_HANTO, HantoPlayerColor.RED);
+		PieceLocationPair[] initialPieces = new PieceLocationPair[4];
+		initialPieces[0] = (new PieceLocationPair(HantoPlayerColor.RED, HantoPieceType.BUTTERFLY, new HantoPosition(0,0)));
+		initialPieces[1] = (new PieceLocationPair(HantoPlayerColor.BLUE, HantoPieceType.BUTTERFLY, new HantoPosition(1,0)));
+		initialPieces[2] = (new PieceLocationPair(HantoPlayerColor.BLUE, HantoPieceType.CRAB, new HantoPosition(-1,1)));
+		initialPieces[3] = (new PieceLocationPair(HantoPlayerColor.BLUE, HantoPieceType.SPARROW, new HantoPosition(0,-1)));
+		testGame.initializeBoard(initialPieces);
+		testGame.setPlayerMoving(HantoPlayerColor.RED);
+		testGame.setTurnNumber(2);
+		((HantoBaseTestGame) testGame).getGame().getPlayerTurn().removeAllReserve();
+		assertEquals(MoveResult.BLUE_WINS, testGame.makeMove(null, null, null));
 	}
 
 }

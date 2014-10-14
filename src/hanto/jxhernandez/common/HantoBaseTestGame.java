@@ -118,5 +118,9 @@ public abstract class HantoBaseTestGame implements HantoTestGame {
 	public String getPrintableBoard() {
 		return testGame.getPrintableBoard();
 	}
+	
+	public HantoBaseGame getGame() {
+		return testGame;
+	}
 
 }
