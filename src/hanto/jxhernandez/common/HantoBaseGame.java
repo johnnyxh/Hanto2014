@@ -122,7 +122,7 @@ public abstract class HantoBaseGame implements HantoGame {
 		// Move/Place the piece
 		movePiece(orig, dest, pieceType, getPlayerTurn());
 
-		if (!isContiguousBoard()) {
+		if (!PossibleMoves.isContiguousBoard(board)) {
 			board.clear();
 			board.putAll(preMoveBoard);
 			throw new HantoException(
@@ -368,48 +368,6 @@ public abstract class HantoBaseGame implements HantoGame {
 			}
 		}
 		return false;
-	}
-
-	/**
-	 * Specifies if the current board state is contiguous (All pieces are
-	 * connected) Top level method for recursive isContiguousBoardR
-	 * 
-	 * @return True if the board is contiguous, false otherwise
-	 */
-	protected boolean isContiguousBoard() {
-		HantoPosition currentVisit = null;
-		List<HantoPosition> hasVisited = new ArrayList<HantoPosition>();
-		List<HantoPosition> toVisit = new ArrayList<HantoPosition>();
-		List<HantoPosition> canVisit = new ArrayList<HantoPosition>();
-		for (Entry<HantoPosition, Piece> entry : board.entrySet()) {
-			toVisit.add(entry.getKey());
-		}
-		currentVisit = toVisit.get(0);
-		return isContiguousBoardR(currentVisit, toVisit, canVisit, hasVisited);
-	}
-
-	private boolean isContiguousBoardR(HantoPosition current,
-			List<HantoPosition> toVisit, List<HantoPosition> canVisit,
-			List<HantoPosition> hasVisited) {
-		hasVisited.add(current);
-		toVisit.remove(current);
-		canVisit.remove(current);
-		for (int i = 0; i < current.surroundingHexes().size(); i++) {
-			HantoPosition currentAdjacent = current.surroundingHexes().get(i);
-			if (getPieceAt(currentAdjacent) != null
-					&& !hasVisited.contains(currentAdjacent)
-					&& !canVisit.contains(currentAdjacent)) {
-				canVisit.add(currentAdjacent);
-			}
-		}
-		if (toVisit.isEmpty()) {
-			return true;
-		} else if (canVisit.isEmpty() && !toVisit.isEmpty()) {
-			return false;
-		} else {
-			return isContiguousBoardR(canVisit.get(0), toVisit, canVisit,
-					hasVisited);
-		}
 	}
 
 	/**

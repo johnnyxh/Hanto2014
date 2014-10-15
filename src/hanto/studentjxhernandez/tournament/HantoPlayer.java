@@ -1,5 +1,16 @@
+/*******************************************************************************
+ * This files was developed for CS4233: Object-Oriented Analysis & Design.
+ * The course was taken at Worcester Polytechnic Institute.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+
 package hanto.studentjxhernandez.tournament;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +29,9 @@ import hanto.jxhernandez.common.PossibleMoves;
 import hanto.tournament.HantoGamePlayer;
 import hanto.tournament.HantoMoveRecord;
 
+/**
+ * Simple AI that plays an Epsilon Hanto Game
+ */
 public class HantoPlayer implements HantoGamePlayer {
 	
 	private Map<HantoPosition, Piece> board;
@@ -30,6 +44,7 @@ public class HantoPlayer implements HantoGamePlayer {
 	public void startGame(HantoGameID version, HantoPlayerColor myColor,
 			boolean doIMoveFirst) {
 		board = new HashMap<HantoPosition, Piece>();
+		gameRules = new ArrayList<HantoMoveRule>();
 		myPlayer = new Player(myColor);
 		if (myColor == HantoPlayerColor.BLUE) {
 			opponentColor = HantoPlayerColor.RED;
@@ -70,20 +85,39 @@ public class HantoPlayer implements HantoGamePlayer {
 			} catch (HantoException e) {
 				e.printStackTrace();
 			}
+			board.put(new HantoPosition(0, 0), new Piece(HantoPieceType.BUTTERFLY, myPlayer.getPlayerColor()));
 			numTurns++;
-			return new HantoMoveRecord(HantoPieceType.BUTTERFLY, null, new HantoPosition(0,0));
+			return new HantoMoveRecord(HantoPieceType.BUTTERFLY, null, new HantoPosition(0, 0));
 		} else if (numTurns == 1) {
 			try {
 				myPlayer.removeFromReserve(HantoPieceType.BUTTERFLY);
 			} catch (HantoException e) {
 				e.printStackTrace();
 			}
+			board.put(new HantoPosition(1, 0), new Piece(HantoPieceType.BUTTERFLY, myPlayer.getPlayerColor()));
 			numTurns++;
-			return new HantoMoveRecord(HantoPieceType.BUTTERFLY, null, new HantoPosition(1,0));
+			return new HantoMoveRecord(HantoPieceType.BUTTERFLY, null, new HantoPosition(1, 0));
 		} else {
 			// Evaluate possible options
 			List<HantoMoveRecord> possibleMoves = PossibleMoves.listPossibleMoves(board, myPlayer, numTurns, gameRules);
+			if (possibleMoves.size() == 0) {
+				return new HantoMoveRecord(null, null, null);
+			}
 			int index = new Random().nextInt(possibleMoves.size());
+			HantoPosition orig = HantoPosition.coordinateToPosition(possibleMoves.get(index).getFrom());
+			HantoPosition dest = HantoPosition.coordinateToPosition(possibleMoves.get(index).getTo());
+			if (orig == null) {
+				try {
+					myPlayer.removeFromReserve(possibleMoves.get(index).getPiece());
+				} catch (HantoException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				board.put(dest, new Piece(possibleMoves.get(index).getPiece(), myPlayer.getPlayerColor()));
+			} else {
+				board.remove(orig);
+				board.put(dest, new Piece(possibleMoves.get(index).getPiece(), myPlayer.getPlayerColor()));
+			}
 			numTurns++;
 			return possibleMoves.get(index);
 		}

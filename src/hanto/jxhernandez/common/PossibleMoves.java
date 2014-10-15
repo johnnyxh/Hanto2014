@@ -35,8 +35,8 @@ public class PossibleMoves {
 	 *            int
 	 * @param moveRules
 	 *            List<HantoMoveRule>
-	 * @return boolean
-	 */
+	
+	 * @return boolean */
 	public static boolean movesLeft(Map<HantoPosition, Piece> board,
 			Player movingPlayer, int numTurns, List<HantoMoveRule> moveRules) {
 		// Always an option on each players first movement
@@ -140,9 +140,10 @@ public class PossibleMoves {
 	 * Specifies if the current board state is contiguous (All pieces are
 	 * connected) Top level method for recursive isContiguousBoardR
 	 * 
-	 * @return True if the board is contiguous, false otherwise
-	 */
-	private static boolean isContiguousBoard(Map<HantoPosition, Piece> board) {
+	
+	 * @param board Map<HantoPosition,Piece>
+	 * @return True if the board is contiguous, false otherwise */
+	public static boolean isContiguousBoard(Map<HantoPosition, Piece> board) {
 		HantoPosition currentVisit = null;
 		List<HantoPosition> hasVisited = new ArrayList<HantoPosition>();
 		List<HantoPosition> toVisit = new ArrayList<HantoPosition>();
@@ -179,6 +180,14 @@ public class PossibleMoves {
 		}
 	}
 
+	/**
+	 * Method listPossibleMoves. Creates a list of the possible moves available for the player
+	 * @param board Map<HantoPosition,Piece> The current Hanto board
+	 * @param movingPlayer Player The moving player and his pieces
+	 * @param numTurns int The number of turns that have passed
+	 * @param moveRules List<HantoMoveRule> The rule list for the pieces in play
+	
+	 * @return List<HantoMoveRecord> List of possible moves that can be made */
 	public static List<HantoMoveRecord> listPossibleMoves(
 			Map<HantoPosition, Piece> board, Player movingPlayer, int numTurns,
 			List<HantoMoveRule> moveRules) {
